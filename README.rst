@@ -52,7 +52,7 @@ Next, you will need to issue a magic command:
 
 .. code-block:: bash
 
-   $ npm install -g phantomjs
+   $ npm install -g phantomjs-prebuilt
 
 At the end, please verify if it is there:
 
@@ -60,7 +60,13 @@ At the end, please verify if it is there:
 
    $ which phantomjs
 
-If you see it there, continue. Otherwise, start from the begining, ask for help
+On windows, please tyr:
+
+.. code-block::
+
+   C: > phantonjs
+
+If you see it there, continue. Otherwise, start from the beginning, ask for help
 or thank you for your attention.
 
 Package installation
