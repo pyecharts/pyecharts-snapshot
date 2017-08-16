@@ -11,8 +11,10 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png image. It is just a
-command away:
+pyecharts-snapshot renders the output of pyecharts as a png image. 
+
+
+Quick usage:
 
 .. code-block:: bash
 
@@ -22,7 +24,14 @@ And you will get:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo.png
 
-		   
+Please find the corresponding code in `examples <https://github.com/chfw/pyecharts-snapshot/tree/master/examples>`_ folder.
+
+
+Test status
+================================================================================
+
+Fully tested on pypy, python 2.6, 2.7, 3.3, 3.4, 3.5 and 3.6.
+
 Constraints
 ================================================================================
 
@@ -82,6 +91,7 @@ Programmatical usage is simple:
 
    from pyecharts_snapshot.main import make_a_snapshot
 
+   ...
    somechart.render()
    make_a_snapshot('render.html', 'cool_snapshot.png')
 
