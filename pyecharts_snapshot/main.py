@@ -26,11 +26,15 @@ def get_resource_dir(folder):
 
 def main():
     file_name = sys.argv[1]
+    make_a_snapshot(file_name, 'output.png')
+
+
+def make_a_snapshot(file_name, output_name):
     proc = subprocess.Popen(
         ['phantomjs',
          os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
          file_name], stdout=subprocess.PIPE)
     content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     png = content.split(',')[1]
-    with open("out.png", "wb") as g:
+    with open(output_name, "wb") as g:
         g.write(decode_base64(png.encode('utf-8')))
