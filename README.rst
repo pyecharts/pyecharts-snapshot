@@ -18,7 +18,7 @@ command away:
 
    $ snapshot render.html
 
-And you will get::
+And you will get:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo.png
 
@@ -71,3 +71,40 @@ or clone it and install it:
     $ git clone http://github.com/chfw/pyecharts-snapshot.git
     $ cd pyecharts-snapshot
     $ python setup.py install
+
+
+Usages
+================================================================================
+
+Programmatical usage is simple:
+
+.. code-block:: python
+
+   from pyecharts_snapshot.main import make_a_snapshot
+
+   somechart.render()
+   make_a_snapshot('render.html', 'cool_snapshot.png')
+
+Here's a fully working example code:
+
+.. code-block:: python
+
+   # coding=utf-8
+   from __future__ import unicode_literals
+   from pyecharts import Bar
+   from pyecharts_snapshot.main import make_a_snapshot
+   
+   attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+   v1 = [5, 20, 36, 10, 75, 90]
+   v2 = [10, 25, 8, 60, 20, 80]
+   bar = Bar("柱状图数据堆叠示例")
+   bar.add("商家A", attr, v1, is_stack=True)
+   bar.add("商家B", attr, v2, is_stack=True)
+   bar.render()
+   make_a_snapshot('render.html', 'snapshot.png')
+
+
+Here is the snapshot:
+
+.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot.png
+
