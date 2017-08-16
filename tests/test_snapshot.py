@@ -21,13 +21,11 @@ def test_main(fake_popen):
     assert(filecmp.cmp('output.png', get_fixture('sample.png')))
 
 
-@patch('subprocess.Popen')
-def test_make_a_snapshot(fake_popen):
-    fake_popen.return_value.stdout = BytesIO(get_base64_image())
+def test_make_a_snapshot_real():
     test_output = 'custom.png'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
-    assert(filecmp.cmp(test_output, get_fixture('sample.png')))
+    assert(filecmp.cmp(test_output, get_fixture('real.png')))
 
 
 def get_base64_image():

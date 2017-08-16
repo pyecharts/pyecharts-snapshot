@@ -8,9 +8,6 @@ pyecharts-snapshot
 .. image:: https://codecov.io/github/chfw/pyecharts-snapshot/coverage.png
     :target: https://codecov.io/github/chfw/pyecharts-snapshot
 
-.. image:: https://readthedocs.org/projects/pyecharts-snapshot/badge/?version=latest
-   :target: http://pyecharts-snapshot.readthedocs.org/en/latest/
-
 Introduction
 ================================================================================
 
@@ -23,18 +20,22 @@ command away:
 
 And you will get::
 
-.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/raw/master/images/demo.png
+.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo.png
 
-
+		   
 Constraints
 ================================================================================
 
 Only one image at a time. No 3D image support
 
+
 Installation
 ================================================================================
 
-Please install [a node.js binary](https://nodejs.org/en/download/) to your
+Tools dependencies
+--------------------------------------------------------------------------------
+
+Please install `a node.js binary <https://nodejs.org/en/download/>`_ to your
 operating system. Simply download the tar ball, extract it and place its bin
 folder in your PATH.
 
@@ -52,6 +53,9 @@ At the end, please verify if it is there:
 
 If you see it there, continue. Otherwise, start from the begining, ask for help
 or thank you for your attention.
+
+Package installation
+--------------------------------------------------------------------------------
 
 You can install it via pip:
 
