@@ -5,7 +5,7 @@ pyecharts-snapshot
 .. image:: https://api.travis-ci.org/chfw/pyecharts-snapshot.svg?branch=master
    :target: http://travis-ci.org/chfw/pyecharts-snapshot
 
-.. image:: https://codecov.io/github/chfw/pyecharts-snapshot/coverage.png
+.. image:: https://codecov.io/gh/chfw/pyecharts-snapshot/branch/master/graph/badge.svg
     :target: https://codecov.io/github/chfw/pyecharts-snapshot
 
 Introduction
