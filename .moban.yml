@@ -1,7 +1,7 @@
 configuration:
   configuration_dir: "commons/config"
   template_dir:
-  - "commons/templates"
+  - "setupmobans/templates"
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
 targets:
