@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+{%block additional_imports%}
+{%endblock%}
+DESCRIPTION = (
+{% for i in range(0, description|length, 70) %}
+    '{{ description[i:(70+i)] }}' +
+{% endfor %}
+    ''
+)
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode',
+{%block SPHINX_EXTENSIONS%}
+{%endblock%}
+]
+
+templates_path = ['_templates']
+source_suffix = '.rst'
+master_doc = 'index'
+
+project = u'{{name}}'
+copyright = u'{{copyright_year}} {{company}}'
+version = '{{release}}'
+release = '{{version}}'
+exclude_patterns = []
+pygments_style = 'sphinx'
+{%block custom_doc_theme%}
+html_theme = 'default'
+{%endblock%}
+html_static_path = ['_static']
+htmlhelp_basename = '{{name}}doc'
+latex_elements = {}
+latex_documents = [
+    ('index', '{{name}}.tex',
+     '{{name}} Documentation',
+     '{{company}}', 'manual'),
+]
+man_pages = [
+    ('index', '{{name}}',
+     '{{name}} Documentation',
+     [u'{{company}}'], 1)
+]
+texinfo_documents = [
+    ('index', '{{name}}',
+     '{{name}} Documentation',
+     '{{company}}', '{{name}}',
+     DESCRIPTION,
+     'Miscellaneous'),
+]

@@ -1,0 +1,172 @@
+{% if external_module_library %}
+from distutils.core import setup, Extension
+{% else %}
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    from ez_setup import use_setuptools
+    use_setuptools()
+    from setuptools import setup, find_packages
+{%endif%}
+{%block platform_block%}
+from platform import python_implementation
+{%endblock%}
+{%block compat_block%}
+import sys
+PY2 = sys.version_info[0] == 2
+PY26 = PY2 and sys.version_info[1] < 7
+{%endblock%}
+
+NAME = '{{name}}'
+AUTHOR = '{{author}}'
+VERSION = '{{version}}'
+EMAIL = '{{contact}}'
+LICENSE = '{{license}}'
+{% if command_line_interface %}
+ENTRY_POINTS = {
+    'console_scripts': [
+        '{{command_line_interface}} = {{ entry_point }}'
+    ]
+}
+{% endif %}
+DESCRIPTION = (
+{% for i in range(0, description|length, 70) %}
+    '{{ description[i:(70+i)] }}' +
+{% endfor %}
+    ''
+)
+KEYWORDS = [
+    {%block additional_keywords%}
+    {%endblock%}
+]
+
+CLASSIFIERS = [
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 2.6',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3.3',
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    {%block additional_classifiers%}
+    {%endblock %}
+]
+
+{%macro handle_complex_dependency(complex_one) -%}
+{%set dependency, condition = complex_one.split(';')%}
+{% if condition == 'python_version<"3"'%}
+if PY2:
+{% endif %}
+{% if condition == 'python_version>="3"'%}
+if not PY2:
+{% endif %}
+{% if condition == 'python_version<"2.7"'%}
+if PY26:
+{% endif %}
+{% if condition == 'platform_python_implementation=="PyPy"'%}
+if python_implementation == "PyPy":
+{%endif%}
+    INSTALL_REQUIRES.append('{{dependency}}')
+{%- endmacro %}
+INSTALL_REQUIRES = [
+{% for dependency in dependencies: %}
+  {% if ';' not in dependency: %}
+    '{{dependency}}',
+  {%   endif %}
+{% endfor %}
+]
+
+{% for dependency in dependencies: %}
+  {%  if ';' in dependency: %}
+{{handle_complex_dependency(dependency)}}
+  {%   endif %}
+{% endfor %}
+
+{% if external_module_library %}
+PYMODULE = Extension(
+    '{{name}}',
+    sources=[
+{% for source in sources: %}
+        '{{source}}',
+{% endfor %}
+    ],
+    libraries=INSTALL_REQUIRES
+)
+{% else %}
+PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
+{% if extra_dependencies or dependencies: %}
+EXTRAS_REQUIRE = {
+  {% for dependency in extra_dependencies: %}
+     {% for key, value in dependency.items(): %}
+    '{{key}}': {{value}},
+     {% endfor %}
+  {% endfor %}
+}
+{% else: %}
+EXTRAS_REQUIRE = {}
+{% endif %}
+{% endif %}
+
+
+def read_files(*files):
+    """Read files into setup"""
+    text = ""
+    for single_file in files:
+        content = read(single_file)
+        text = text + content + "\n"
+    return text
+
+
+def read(afile):
+    """Read a file into setup"""
+    with open(afile, 'r') as opened_file:
+        content = filter_out_test_code(opened_file)
+        content = "".join(list(content))
+        return content
+
+
+def filter_out_test_code(file_handle):
+    found_test_code = False
+    for line in file_handle.readlines():
+        if line.startswith('.. testcode:'):
+            found_test_code = True
+            continue
+        if found_test_code is True:
+            if line.startswith('  '):
+                continue
+            else:
+                empty_line = line.strip()
+                if len(empty_line) == 0:
+                    continue
+                else:
+                    found_test_code = False
+                    yield line
+        else:
+            yield line
+
+
+if __name__ == '__main__':
+    setup(
+        name=NAME,
+        author=AUTHOR,
+        version=VERSION,
+        author_email=EMAIL,
+        description=DESCRIPTION,
+        long_description=read_files('README.rst', 'CHANGELOG.rst'),
+        license=LICENSE,
+        keywords=KEYWORDS,
+{% if external_module_library %}
+        ext_modules=[PYMODULE],
+{% else %}
+        extras_require=EXTRAS_REQUIRE,
+        tests_require=['nose'],
+        install_requires=INSTALL_REQUIRES,
+        packages=PACKAGES,
+        include_package_data=True,
+        zip_safe=False,
+{% if command_line_interface %}
+        entry_points=ENTRY_POINTS,
+{% endif %}
+{% endif%}
+        classifiers=CLASSIFIERS
+    )

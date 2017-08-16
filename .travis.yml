@@ -1,0 +1,18 @@
+sudo: false
+language: python
+notifications:
+  email: false
+python:
+  - 3.6
+  - 3.5
+  - 3.4
+  - 3.3
+  - 2.7
+  - 2.6
+  - pypy
+before_install:
+  - pip install -r tests/requirements.txt
+script:
+  - make test
+after_success:
+  codecov
