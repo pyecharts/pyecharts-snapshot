@@ -12,6 +12,7 @@ python:
   - pypy
 before_install:
   - pip install -r tests/requirements.txt
+  - npm install -g phantomjs
 script:
   - make test
 after_success:

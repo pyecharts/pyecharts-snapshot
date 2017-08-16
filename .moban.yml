@@ -5,7 +5,6 @@ configuration:
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
 targets:
-  - README.rst: README.rst.jj2
   - setup.py: setup.py.jj2
   - requirements.txt: requirements.txt.jj2
   - "tests/requirements.txt": "tests/requirements.txt.jj2"

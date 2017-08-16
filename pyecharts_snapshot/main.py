@@ -1,4 +1,6 @@
 import io
+import os
+import sys
 import base64
 import subprocess
 
@@ -16,10 +18,19 @@ def decode_base64(data):
     return base64.decodestring(data)
 
 
+def get_resource_dir(folder):
+    current_path = os.path.dirname(__file__)
+    resource_path = os.path.join(current_path, folder)
+    return resource_path
+
+
 def main():
-    proc = subprocess.Popen(['phantomjs', 'gen.js'], stdout=subprocess.PIPE)
+    file_name = sys.argv[1]
+    proc = subprocess.Popen(
+        ['phantomjs',
+         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
+         file_name], stdout=subprocess.PIPE)
     content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
-    print(content)
     png = content.split(',')[1]
     with open("out.png", "wb") as g:
         g.write(decode_base64(png.encode('utf-8')))
