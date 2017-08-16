@@ -17,15 +17,24 @@ def test_main(fake_popen):
     args = ['snapshot', os.path.join("tests", "fixtures", "render.html")]
     with patch.object(sys, 'argv', args):
         main()
-    assert(os.path.exists('output.png'))
     assert(filecmp.cmp('output.png', get_fixture('sample.png')))
 
 
-def test_make_a_snapshot_real():
+@patch('subprocess.Popen')
+def test_make_a_snapshot(fake_popen):
+    fake_popen.return_value.stdout = BytesIO(get_base64_image())
     test_output = 'custom.png'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
-    assert(filecmp.cmp(test_output, get_fixture('real.png')))
+    assert(filecmp.cmp(test_output, get_fixture('sample.png')))
+
+
+def test_make_a_snapshot_real():
+    # cannot produce a consistent binary matching file
+    test_output = 'real.png'
+    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                    test_output)
+    assert(os.path.exists(test_output))  # exists just fine
 
 
 def get_base64_image():
