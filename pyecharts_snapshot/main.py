@@ -5,6 +5,9 @@ import base64
 import subprocess
 
 
+PY2 = sys.version_info[0] == 2
+
+
 def decode_base64(data):
     """Decode base64, padding being optional.
 
@@ -34,7 +37,11 @@ def make_a_snapshot(file_name, output_name):
         ['phantomjs',
          os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
          file_name], stdout=subprocess.PIPE)
-    content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
+    if PY2:
+        content = proc.stdout.read()
+        content = content.decode('utf-8')
+    else:
+        content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     png = content.split(',')[1]
     with open(output_name, "wb") as g:
         g.write(decode_base64(png.encode('utf-8')))
