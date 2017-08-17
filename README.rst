@@ -27,6 +27,11 @@ And you will get:
 Please find the corresponding code in `examples <https://github.com/chfw/pyecharts-snapshot/tree/master/examples>`_ folder.
 
 
+Command line options::
+
+   $ snapshot output.html [png|pdf]
+
+
 Test status
 ================================================================================
 
