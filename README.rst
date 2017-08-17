@@ -11,7 +11,7 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png image. 
+pyecharts-snapshot renders the output of pyecharts as a png image or a pdf file. 
 
 
 Quick usage:

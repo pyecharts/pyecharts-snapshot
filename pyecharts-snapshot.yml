@@ -10,7 +10,8 @@ copyright_year: 2017
 command_line_interface: "snapshot"
 entry_point: "pyecharts_snapshot.main:main"
 license: MIT
-dependencies: []
+dependencies:
+  - pillow
 keywords:
   - echarts
   - visualisation

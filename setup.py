@@ -49,11 +49,13 @@ CLASSIFIERS = [
 ]
 
 INSTALL_REQUIRES = [
+    'pillow',
 ]
 
 
 PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
-EXTRAS_REQUIRE = {}
+EXTRAS_REQUIRE = {
+}
 
 
 def read_files(*files):
