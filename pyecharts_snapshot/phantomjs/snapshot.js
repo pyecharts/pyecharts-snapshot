@@ -14,5 +14,5 @@ page.open(file, function(){
 		var content = page.evaluateJavaScript(snapshot);
 		console.log(content);
         phantom.exit();
-    }, 1000);
+    }, 500);
 });
