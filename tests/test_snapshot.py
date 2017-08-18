@@ -37,6 +37,14 @@ def test_make_a_snapshot_real():
     assert(os.path.exists(test_output))  # exists just fine
 
 
+def test_make_a_snapshot_real_pdf():
+    # cannot produce a consistent binary matching file
+    test_output = 'real.pdf'
+    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                    test_output)
+    assert(os.path.exists(test_output))  # exists just fine
+
+
 def get_base64_image():
     with open(get_fixture('base64.txt'), 'r') as f:
         content = f.read().replace('\r\n', '')
