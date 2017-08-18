@@ -186,3 +186,11 @@ Design Considerations
 
 #. Ghost.Py: very hard to install on my own. Dropped
 #. Puppeteer: too big to download. Dropped
+
+
+Maintenance Instructions
+================================================================================
+
+#. install pyecharts-snapshot
+#. make demo
+#. take screenshots of grid.pdf and snapshot.pdf in examples folder
