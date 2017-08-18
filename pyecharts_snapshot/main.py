@@ -13,27 +13,7 @@ if PY2:
 else:
     from io import BytesIO
 
-
 NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
-
-
-def decode_base64(data):
-    """Decode base64, padding being optional.
-
-    :param data: Base64 data as an ASCII byte string
-    :returns: The decoded byte string.
-
-    """
-    missing_padding = len(data) % 4
-    if missing_padding != 0:
-        data += b'=' * (4 - missing_padding)
-    return base64.decodestring(data)
-
-
-def get_resource_dir(folder):
-    current_path = os.path.dirname(__file__)
-    resource_path = os.path.join(current_path, folder)
-    return resource_path
 
 
 def main():
@@ -70,6 +50,19 @@ def make_a_snapshot(file_name, output_name):
         raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
 
 
+def decode_base64(data):
+    """Decode base64, padding being optional.
+
+    :param data: Base64 data as an ASCII byte string
+    :returns: The decoded byte string.
+
+    """
+    missing_padding = len(data) % 4
+    if missing_padding != 0:
+        data += b'=' * (4 - missing_padding)
+    return base64.decodestring(data)
+
+
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as g:
         g.write(imagedata)
@@ -82,3 +75,9 @@ def save_as_pdf(imagedata, output_name):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, 'PDF', quality=100)
+
+
+def get_resource_dir(folder):
+    current_path = os.path.dirname(__file__)
+    resource_path = os.path.join(current_path, folder)
+    return resource_path
