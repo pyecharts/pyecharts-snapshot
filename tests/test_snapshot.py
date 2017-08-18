@@ -2,6 +2,7 @@ import os
 import sys
 import filecmp
 from io import BytesIO
+from platform import python_implementation
 from nose.tools import raises
 
 from pyecharts_snapshot.main import main, make_a_snapshot, PY2
@@ -10,7 +11,7 @@ try:
 except ImportError:
     from unittest.mock import patch
 
-PY27 = sys.version_info[1] == 7 and PY2
+PY27 = sys.version_info[1] == 7 and PY2 and python_implementation != "PyPy"
 
 
 @patch('subprocess.Popen')
