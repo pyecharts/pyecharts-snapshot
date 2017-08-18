@@ -14,38 +14,8 @@ Introduction
 pyecharts-snapshot renders the output of pyecharts as a png image or a pdf file. 
 
 
-Test status
-================================================================================
-
-Fully tested on pypy, python 2.6, 2.7, 3.3, 3.4, 3.5 and 3.6.
-
-Constraints
-================================================================================
-
-Only one image at a time. No 3D image support
-
-
 Usage
 ================================================================================
-
-Command line options::
-
-   $ snapshot output.html [png|pdf]
-
-
-Programmatical usage is simple:
-
-.. code-block:: python
-
-   from pyecharts_snapshot.main import make_a_snapshot
-
-   ...
-   somechart.render()
-   make_a_snapshot('render.html', 'cool_snapshot.png')
-
-
-Command Line Usage
---------------------------------------------------------------------------------
 
 Get png:
 
@@ -68,10 +38,30 @@ And you will get:
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo_in_pdf.png
    :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/grid.pdf
 
-Please find the corresponding code in `examples <https://github.com/chfw/pyecharts-snapshot/tree/master/examples>`_ folder.
+And here the code to `generate it <https://github.com/chfw/pyecharts-snapshot/blob/master/examples/grid.py>`_
 
 
-In your program
+Usage details
+--------------------------------------------------------------------------------
+
+Command line options::
+
+   $ snapshot output.html [png|pdf]
+
+
+Programmatical usage is simple:
+
+.. code-block:: python
+
+   ... 
+   from pyecharts_snapshot.main import make_a_snapshot
+
+   ...
+   somechart.render()
+   make_a_snapshot('render.html', 'cool_snapshot.png')
+
+
+Example programs
 --------------------------------------------------------------------------------
 
 Here's a fully working example code to get a png image:
@@ -181,3 +171,12 @@ or clone it and install it:
     $ cd pyecharts-snapshot
     $ python setup.py install
 
+Test status
+================================================================================
+
+Fully tested on pypy, python 2.6, 2.7, 3.3, 3.4, 3.5 and 3.6.
+
+Constraints
+================================================================================
+
+Only one image at a time. No 3D image support
