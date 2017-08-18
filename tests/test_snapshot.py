@@ -2,14 +2,11 @@ import os
 import sys
 import filecmp
 from io import BytesIO
-from platform import python_implementation
+from mock import patch
 from nose.tools import raises
+from platform import python_implementation
 
 from pyecharts_snapshot.main import main, make_a_snapshot, PY2
-try:
-    from mock import patch
-except ImportError:
-    from unittest.mock import patch
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 
@@ -67,11 +64,18 @@ def test_make_a_snapshot_real():
 
 
 def test_make_a_snapshot_real_pdf():
-    # cannot produce a consistent binary matching file
     test_output = 'real.pdf'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
     assert(os.path.exists(test_output))  # exists just fine
+
+
+@raises(Exception)
+def test_unsupported_file_type():
+    # cannot produce a consistent binary matching file
+    test_output = 'real.shady'
+    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                    test_output)
 
 
 def get_base64_image():
