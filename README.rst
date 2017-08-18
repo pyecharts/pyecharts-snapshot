@@ -180,3 +180,9 @@ Constraints
 ================================================================================
 
 Only one image at a time. No 3D image support
+
+Design Considerations
+================================================================================
+
+# Ghost.Py: very hard to install on my own. Dropped
+# Puppeteer: too big to download. Dropped
