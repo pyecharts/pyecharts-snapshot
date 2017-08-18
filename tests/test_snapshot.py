@@ -11,7 +11,7 @@ try:
 except ImportError:
     from unittest.mock import patch
 
-PY27 = sys.version_info[1] == 7 and PY2 and python_implementation != "PyPy"
+PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 
 
 @patch('subprocess.Popen')
