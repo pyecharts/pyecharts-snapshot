@@ -2,7 +2,7 @@ import os
 import sys
 import filecmp
 from io import BytesIO
-
+from nose.tools import raises
 
 from pyecharts_snapshot.main import main, make_a_snapshot
 try:
@@ -18,6 +18,27 @@ def test_main(fake_popen):
     with patch.object(sys, 'argv', args):
         main()
     assert(filecmp.cmp('output.png', get_fixture('sample.png')))
+
+
+@patch('subprocess.Popen')
+def test_pdf_at_command_line(fake_popen):
+    fake_popen.return_value.stdout = BytesIO(get_base64_image())
+    args = [
+        'snapshot', os.path.join("tests", "fixtures", "render.html"), 'pdf']
+    with patch.object(sys, 'argv', args):
+        main()
+    assert(filecmp.cmp('output.pdf', get_fixture('sample.pdf')))
+
+
+@raises(Exception)
+@patch('subprocess.Popen')
+def test_unknown_file_type_at_command_line(fake_popen):
+    fake_popen.return_value.stdout = BytesIO(get_base64_image())
+    args = [
+        'snapshot', os.path.join("tests", "fixtures", "render.html"),
+        'moonwalk']
+    with patch.object(sys, 'argv', args):
+        main()
 
 
 @patch('subprocess.Popen')

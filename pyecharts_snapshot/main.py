@@ -14,6 +14,9 @@ else:
     from io import BytesIO
 
 
+NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
+
+
 def decode_base64(data):
     """Decode base64, padding being optional.
 
@@ -41,6 +44,8 @@ def main():
             file_type = sys.argv[2]
             if file_type == 'pdf':
                 output = 'output.pdf'
+            elif file_type != 'png':
+                raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
         make_a_snapshot(file_name, output)
 
 
@@ -62,7 +67,7 @@ def make_a_snapshot(file_name, output_name):
     elif file_type == 'png':
         save_as_png(imagedata, output_name)
     else:
-        raise Exception("Do not support file type %s" % file_type)
+        raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
 
 
 def save_as_png(imagedata, output_name):
