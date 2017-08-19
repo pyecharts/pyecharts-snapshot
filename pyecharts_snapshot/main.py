@@ -36,10 +36,13 @@ def make_a_snapshot(file_name, output_name):
     #      file_name], stdout=subprocess.PIPE)
 
     # add shell=True and it works on Windows now.
+    shell_flag = False
+    if sys.platform == 'win32':
+        shell_flag = True
     proc = subprocess.Popen(
         ['phantomjs',
          os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-         file_name], stdout=subprocess.PIPE, shell=True)
+         file_name], stdout=subprocess.PIPE, shell=shell_flag)
 
     if PY2:
         content = proc.stdout.read()
