@@ -30,10 +30,17 @@ def main():
 
 
 def make_a_snapshot(file_name, output_name):
+    # proc = subprocess.Popen(
+    #     ['phantomjs',
+    #      os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
+    #      file_name], stdout=subprocess.PIPE)
+
+    # add shell=True and it works on Windows now.
     proc = subprocess.Popen(
         ['phantomjs',
          os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-         file_name], stdout=subprocess.PIPE)
+         file_name], stdout=subprocess.PIPE, shell=True)
+
     if PY2:
         content = proc.stdout.read()
         content = content.decode('utf-8')
