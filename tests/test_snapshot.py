@@ -21,6 +21,16 @@ def test_main(fake_popen):
 
 
 @patch('subprocess.Popen')
+def test_jpeg_at_command_line(fake_popen):
+    fake_popen.return_value.stdout = BytesIO(get_base64_image())
+    args = [
+        'snapshot', os.path.join("tests", "fixtures", "render.html"), 'jpeg']
+    with patch.object(sys, 'argv', args):
+        main()
+    assert(filecmp.cmp('output.jpeg', get_fixture('sample.jpeg')))
+
+
+@patch('subprocess.Popen')
 def test_pdf_at_command_line(fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
     args = [
@@ -47,12 +57,21 @@ def test_unknown_file_type_at_command_line(fake_popen):
 
 
 @patch('subprocess.Popen')
-def test_make_a_snapshot(fake_popen):
+def test_make_png_snapshot(fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
     test_output = 'custom.png'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
     assert(filecmp.cmp(test_output, get_fixture('sample.png')))
+
+
+@patch('subprocess.Popen')
+def test_make_jpeg_snapshot(fake_popen):
+    fake_popen.return_value.stdout = BytesIO(get_base64_image())
+    test_output = 'custom.jpeg'
+    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                    test_output)
+    assert(filecmp.cmp(test_output, get_fixture('sample.jpeg')))
 
 
 def test_make_a_snapshot_real():

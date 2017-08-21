@@ -22,14 +22,15 @@ def main():
         output = 'output.png'
         if len(sys.argv) == 3:
             file_type = sys.argv[2]
-            if file_type == 'pdf':
-                output = 'output.pdf'
+            if file_type in ['pdf', 'jpeg']:
+                output = 'output.%s' % file_type
             elif file_type != 'png':
                 raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
         make_a_snapshot(file_name, output)
 
 
 def make_a_snapshot(file_name, output_name):
+    file_type = output_name.split('.')[-1]
     # proc = subprocess.Popen(
     #     ['phantomjs',
     #      os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
@@ -39,22 +40,23 @@ def make_a_snapshot(file_name, output_name):
     shell_flag = False
     if sys.platform == 'win32':
         shell_flag = True
+    proc_params = [
+        'phantomjs',
+        os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
+        file_name,
+        file_type]
     proc = subprocess.Popen(
-        ['phantomjs',
-         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-         file_name], stdout=subprocess.PIPE, shell=shell_flag)
-
+        proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:
         content = proc.stdout.read()
         content = content.decode('utf-8')
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
-    png = content.split(',')[1]
-    imagedata = decode_base64(png.encode('utf-8'))
-    file_type = output_name.split('.')[-1]
+    base64_imagedata = content.split(',')[1]
+    imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type == 'pdf':
         save_as_pdf(imagedata, output_name)
-    elif file_type == 'png':
+    elif file_type in ['png', 'jpeg']:
         save_as_png(imagedata, output_name)
     else:
         raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)

@@ -11,7 +11,8 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png image or a pdf file. 
+pyecharts-snapshot renders the output of pyecharts as a png, jpeg image or a pdf file
+at command line or in your code.
 
 
 Usage
@@ -46,14 +47,14 @@ Usage details
 
 Command line options::
 
-   $ snapshot output.html [png|pdf]
+   $ snapshot output.html [png|jpeg|pdf]
 
 
 Programmatical usage is simple:
 
 .. code-block:: python
 
-   ... 
+   ...
    from pyecharts_snapshot.main import make_a_snapshot
 
    ...
@@ -72,7 +73,7 @@ Here's a fully working example code to get a png image:
    from __future__ import unicode_literals
    from pyecharts import Bar
    from pyecharts_snapshot.main import make_a_snapshot
-   
+
    attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
    v1 = [5, 20, 36, 10, 75, 90]
    v2 = [10, 25, 8, 60, 20, 80]
@@ -93,10 +94,10 @@ In order to get a pdf file, you can do the following instead:
 
    # coding=utf-8
    from __future__ import unicode_literals
-   
+
    from pyecharts import Line, Pie, Grid
    from pyecharts_snapshot.main import make_a_snapshot
-   
+
    line = Line("折线图示例", width=1200)
    attr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
    line.add("最高气温", attr, [11, 11, 15, 13, 12, 13, 10],
@@ -108,7 +109,7 @@ In order to get a pdf file, you can do the following instead:
    pie = Pie("饼图示例", title_pos="45%")
    pie.add("", attr, v1, radius=[30, 55],
            legend_pos="65%", legend_orient='vertical')
-   
+
    grid = Grid()
    grid.add(line, grid_right="65%")
    grid.add(pie, grid_left="60%")
@@ -144,7 +145,7 @@ At the end, please verify if it is there:
 
    $ which phantomjs
 
-On windows, please tyr:
+On windows, please try:
 
 .. code-block::
 
