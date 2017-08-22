@@ -27,6 +27,7 @@ Get png:
 And you will get:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo.png
+   :width: 800px
 
 Get pdf:
 
@@ -38,6 +39,7 @@ And you will get:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo_in_pdf.png
    :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/grid.pdf
+   :width: 800px
 
 And here the code to `generate it <https://github.com/chfw/pyecharts-snapshot/blob/master/examples/grid.py>`_
 
@@ -87,6 +89,7 @@ Here's a fully working example code to get a png image:
 Here is the snapshot:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot.png
+   :width: 800px
 
 In order to get a pdf file, you can do the following instead:
 
@@ -121,6 +124,7 @@ Here is the snapshot in pdf:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot_in_pdf.png
    :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/snapshot.pdf
+   :width: 800px
 
 
 Installation

@@ -5,7 +5,7 @@ contact: "wangc_2011@hotmail.com"
 company: "Onni Software Ltd."
 version: "0.0.5"
 current_version: "0.0.5"
-release: "0.0.4"
+release: "0.0.5"
 copyright_year: 2017
 command_line_interface: "snapshot"
 entry_point: "pyecharts_snapshot.main:main"
@@ -18,4 +18,6 @@ keywords:
   - data
   - utility
   - png
+  - jpeg
+  - pdf
 description: "renders pyecharts as image"

@@ -23,7 +23,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/chfw/pyecharts-snapshot'
-DOWNLOAD_URL = '%s/archive/0.0.4.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.0.5.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
@@ -31,6 +31,8 @@ KEYWORDS = [
     'data',
     'utility',
     'png',
+    'jpeg',
+    'pdf',
     'python'
 ]
 
