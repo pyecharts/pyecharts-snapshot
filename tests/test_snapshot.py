@@ -3,7 +3,7 @@ import sys
 import filecmp
 from io import BytesIO
 from mock import patch
-from nose.tools import raises
+from nose.tools import raises, eq_
 from platform import python_implementation
 
 from pyecharts_snapshot.main import main, make_a_snapshot, PY2
@@ -43,6 +43,33 @@ def test_pdf_at_command_line(fake_popen):
     else:
         # otherwise test the file is produced
         assert(os.path.exists('output.pdf'))
+
+
+@patch('subprocess.Popen')
+def test_delay_option(fake_popen):
+    fake_popen.side_effect = Exception("Enough test. Abort")
+    sample_delay = 0.1
+    args = [
+        'snapshot', os.path.join("tests", "fixtures", "render.html"),
+        'jpeg', str(sample_delay)]
+    try:
+        with patch.object(sys, 'argv', args):
+            main()
+    except Exception:
+        eq_(fake_popen.call_args[0][0][4], '100')
+
+
+@patch('subprocess.Popen')
+def test_default_delay_value(fake_popen):
+    fake_popen.side_effect = Exception("Enough test. Abort")
+    args = [
+        'snapshot', os.path.join("tests", "fixtures", "render.html"),
+        'jpeg']
+    try:
+        with patch.object(sys, 'argv', args):
+            main()
+    except Exception:
+        eq_(fake_popen.call_args[0][0][4], '500')
 
 
 @raises(Exception)

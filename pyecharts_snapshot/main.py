@@ -14,22 +14,28 @@ else:
     from io import BytesIO
 
 NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
+DEFAULT_DELAY = 0.5
 
 
 def main():
-    if len(sys.argv) > 1:
-        file_name = sys.argv[1]
-        output = 'output.png'
-        if len(sys.argv) == 3:
-            file_type = sys.argv[2]
-            if file_type in ['pdf', 'jpeg']:
-                output = 'output.%s' % file_type
-            elif file_type != 'png':
-                raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
-        make_a_snapshot(file_name, output)
+    if len(sys.argv) < 2 or len(sys.argv) > 4:
+        raise sys.ExitError("Wrong parameters")
+
+    file_name = sys.argv[1]
+    delay = DEFAULT_DELAY
+    output = 'output.png'
+    if len(sys.argv) >= 3:
+        file_type = sys.argv[2]
+        if file_type in ['pdf', 'jpeg']:
+            output = 'output.%s' % file_type
+        elif file_type != 'png':
+            raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
+        if len(sys.argv) == 4:
+            delay = float(sys.argv[3])  # in seconds
+    make_a_snapshot(file_name, output, delay=delay)
 
 
-def make_a_snapshot(file_name, output_name):
+def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     file_type = output_name.split('.')[-1]
     # proc = subprocess.Popen(
     #     ['phantomjs',
@@ -37,14 +43,17 @@ def make_a_snapshot(file_name, output_name):
     #      file_name], stdout=subprocess.PIPE)
 
     # add shell=True and it works on Windows now.
+
     shell_flag = False
     if sys.platform == 'win32':
         shell_flag = True
+    __actual_delay_in_ms = int(delay * 1000)
     proc_params = [
         'phantomjs',
         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
         file_name,
-        file_type]
+        file_type,
+        str(__actual_delay_in_ms)]
     proc = subprocess.Popen(
         proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:

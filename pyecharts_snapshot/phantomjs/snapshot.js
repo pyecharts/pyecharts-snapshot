@@ -3,6 +3,7 @@ var system = require('system');
 
 var file = system.args[1];
 var file_type = system.args[2];
+var delay = system.args[3];
 
 var snapshot = "" + 
 "    function(){"+
@@ -16,5 +17,5 @@ page.open(file, function(){
 		var content = page.evaluateJavaScript(snapshot);
 		console.log(content);
         phantom.exit();
-    }, 500);
+    }, delay);
 });

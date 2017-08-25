@@ -49,7 +49,11 @@ Usage details
 
 Command line options::
 
-   $ snapshot output.html [png|jpeg|pdf]
+   $ snapshot output.html [png|jpeg|pdf] delay_in_seconds
+
+where `delay_in_seconds` tells pyexcel-snapshots to take a snapshot after
+delay_in_seconds. It is needed only when your snapshot is partial because the chart
+animation takes long than 0.5 second(default).
 
 
 Programmatical usage is simple:
@@ -63,6 +67,7 @@ Programmatical usage is simple:
    somechart.render()
    make_a_snapshot('render.html', 'cool_snapshot.png')
 
+where delay as an optional parameter can be given to specify `delay_in_seconds`.
 
 Example programs
 --------------------------------------------------------------------------------
