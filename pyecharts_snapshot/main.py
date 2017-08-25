@@ -19,7 +19,7 @@ DEFAULT_DELAY = 0.5
 
 def main():
     if len(sys.argv) < 2 or len(sys.argv) > 4:
-        raise sys.ExitError("Wrong parameters")
+        raise sys.exit(-1)
 
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY

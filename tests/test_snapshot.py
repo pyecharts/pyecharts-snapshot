@@ -11,6 +11,17 @@ from pyecharts_snapshot.main import main, make_a_snapshot, PY2
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 
 
+class CustomTestException(Exception):
+    pass
+
+
+@raises(SystemExit)
+def test_no_params():
+    args = ['snapshot']
+    with patch.object(sys, 'argv', args):
+        main()
+
+
 @patch('subprocess.Popen')
 def test_main(fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
@@ -61,14 +72,14 @@ def test_delay_option(fake_popen):
 
 @patch('subprocess.Popen')
 def test_default_delay_value(fake_popen):
-    fake_popen.side_effect = Exception("Enough test. Abort")
+    fake_popen.side_effect = CustomTestException("Enough test. Abort")
     args = [
         'snapshot', os.path.join("tests", "fixtures", "render.html"),
         'jpeg']
     try:
         with patch.object(sys, 'argv', args):
             main()
-    except Exception:
+    except CustomTestException:
         eq_(fake_popen.call_args[0][0][4], '500')
 
 
@@ -99,6 +110,27 @@ def test_make_jpeg_snapshot(fake_popen):
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
     assert(filecmp.cmp(test_output, get_fixture('sample.jpeg')))
+
+
+@patch('subprocess.Popen')
+def test_win32_shell_flag(fake_popen):
+    fake_popen.side_effect = CustomTestException("Enough. Stop testing")
+    try:
+        with patch.object(sys, 'platform', 'win32'):
+            make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                            'sample.png')
+    except CustomTestException:
+        eq_(fake_popen.call_args[1]['shell'], True)
+
+
+@patch('subprocess.Popen')
+def test_win32_shell_flag_is_false(fake_popen):
+    fake_popen.side_effect = CustomTestException("Enough. Stop testing")
+    try:
+        make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                        'sample.png')
+    except CustomTestException:
+        eq_(fake_popen.call_args[1]['shell'], False)
 
 
 def test_make_a_snapshot_real():
