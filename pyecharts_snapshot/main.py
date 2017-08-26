@@ -26,7 +26,7 @@ def main():
     output = 'output.png'
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
-        if file_type in ['pdf', 'jpeg']:
+        if file_type in ['pdf', 'jpeg', 'gif']:
             output = 'output.%s' % file_type
         elif file_type != 'png':
             raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
@@ -63,8 +63,8 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     base64_imagedata = content.split(',')[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
-    if file_type == 'pdf':
-        save_as_pdf(imagedata, output_name)
+    if file_type in ['pdf', 'gif']:
+        save_as(imagedata, output_name, file_type)
     elif file_type in ['png', 'jpeg']:
         save_as_png(imagedata, output_name)
     else:
@@ -89,13 +89,13 @@ def save_as_png(imagedata, output_name):
         g.write(imagedata)
 
 
-def save_as_pdf(imagedata, output_name):
+def save_as(imagedata, output_name, file_type):
     m = Image.open(BytesIO(imagedata))
     m.load()
     color = (255, 255, 255)
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
-    b.save(output_name, 'PDF', quality=100)
+    b.save(output_name, file_type.upper(), quality=100)
 
 
 def get_resource_dir(folder):
