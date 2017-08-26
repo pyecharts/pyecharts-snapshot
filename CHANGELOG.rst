@@ -1,6 +1,11 @@
 Change log
 ===========
 
+0.0.7 - 26.08.2017
+--------------------------------------------------------------------------------
+
+Save the output of pyecharts to gif file
+
 0.0.6 - 25.08.2017
 --------------------------------------------------------------------------------
 
@@ -14,7 +19,7 @@ Save the output of pyecharts to jpeg file
 0.0.4 - 19.08.2017
 --------------------------------------------------------------------------------
 
-#. `#1, <https://github.com/chfw/pyecharts-snapshot/pull/1>`_: Support windows platform.
+Updated, `#1, <https://github.com/chfw/pyecharts-snapshot/pull/1>`_: Support windows platform.
 
 0.0.3 - 19.08.2017
 --------------------------------------------------------------------------------

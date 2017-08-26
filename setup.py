@@ -10,7 +10,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.0.6'
+VERSION = '0.0.7'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -23,7 +23,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/chfw/pyecharts-snapshot'
-DOWNLOAD_URL = '%s/archive/0.0.6.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.0.7.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',

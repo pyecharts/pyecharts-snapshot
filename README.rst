@@ -11,8 +11,8 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png, jpeg image or a pdf file
-at command line or in your code.
+pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif image or
+a pdf file at command line or in your code.
 
 
 Usage
@@ -49,7 +49,7 @@ Usage details
 
 Command line options::
 
-   $ snapshot output.html [png|jpeg|pdf] delay_in_seconds
+   $ snapshot output.html [png|jpeg|gif|pdf] delay_in_seconds
 
 where `delay_in_seconds` tells pyexcel-snapshots to take a snapshot after
 delay_in_seconds. It is needed only when your snapshot is partial because the chart
