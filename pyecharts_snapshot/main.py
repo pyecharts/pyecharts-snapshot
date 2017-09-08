@@ -37,21 +37,17 @@ def main():
 
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     file_type = output_name.split('.')[-1]
-    # proc = subprocess.Popen(
-    #     ['phantomjs',
-    #      os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-    #      file_name], stdout=subprocess.PIPE)
-
-    # add shell=True and it works on Windows now.
 
     shell_flag = False
     if sys.platform == 'win32':
         shell_flag = True
     __actual_delay_in_ms = int(delay * 1000)
+
+    # add shell=True and it works on Windows now.
     proc_params = [
         'phantomjs',
         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-        file_name,
+        file_name.replace('\\', '/'),
         file_type,
         str(__actual_delay_in_ms)]
     proc = subprocess.Popen(

@@ -71,6 +71,19 @@ def test_delay_option(fake_popen):
 
 
 @patch('subprocess.Popen')
+def test_windows_file_name(fake_popen):
+    fake_popen.side_effect = Exception("Enough test. Abort")
+    args = [
+        'snapshot', "tests\\fixtures\\render.html",
+        'jpeg', '0.1']
+    try:
+        with patch.object(sys, 'argv', args):
+            main()
+    except Exception:
+        eq_(fake_popen.call_args[0][0][2], 'tests/fixtures/render.html')
+
+
+@patch('subprocess.Popen')
 def test_default_delay_value(fake_popen):
     fake_popen.side_effect = CustomTestException("Enough test. Abort")
     args = [
