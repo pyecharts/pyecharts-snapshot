@@ -1,10 +1,9 @@
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+# Template by setupmobans
+import os
 import sys
+import codecs
+from shutil import rmtree
+from setuptools import setup, find_packages, Command
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
 
@@ -24,7 +23,7 @@ DESCRIPTION = (
 )
 URL = 'https://github.com/chfw/pyecharts-snapshot'
 DOWNLOAD_URL = '%s/archive/0.0.8.tar.gz' % URL
-FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
+FILES = ['README.rst',  'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
     'visualisation',
@@ -58,6 +57,42 @@ INSTALL_REQUIRES = [
 PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
 EXTRAS_REQUIRE = {
 }
+PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
+    sys.executable)
+GS_COMMAND = ('gs pyecharts-snapshot v0.0.8 ' +
+              "Find 0.0.8 in changelog for more details")
+here = os.path.abspath(os.path.dirname(__file__))
+
+
+class PublishCommand(Command):
+    """Support setup.py upload."""
+
+    description = 'Build and publish the package on github and pypi'
+    user_options = []
+
+    @staticmethod
+    def status(s):
+        """Prints things in bold."""
+        print('\033[1m{0}\033[0m'.format(s))
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            self.status('Removing previous builds...')
+            rmtree(os.path.join(here, 'dist'))
+        except OSError:
+            pass
+
+        self.status('Building Source and Wheel (universal) distribution...')
+        if os.system(GS_COMMAND) == 0:
+            os.system(PUBLISH_COMMAND)
+
+        sys.exit()
 
 
 def read_files(*files):
@@ -71,7 +106,7 @@ def read_files(*files):
 
 def read(afile):
     """Read a file into setup"""
-    with open(afile, 'r') as opened_file:
+    with codecs.open(afile, 'r', 'utf-8') as opened_file:
         content = filter_out_test_code(opened_file)
         content = "".join(list(content))
         return content
@@ -120,5 +155,9 @@ if __name__ == '__main__':
         include_package_data=True,
         zip_safe=False,
         entry_points=ENTRY_POINTS,
-        classifiers=CLASSIFIERS
+        classifiers=CLASSIFIERS,
+        setup_requires=['gease'],
+        cmdclass={
+            'publish': PublishCommand,
+        }
     )
