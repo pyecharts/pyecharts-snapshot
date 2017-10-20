@@ -9,7 +9,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.0.8'
+VERSION = '0.0.9'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -22,7 +22,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/chfw/pyecharts-snapshot'
-DOWNLOAD_URL = '%s/archive/0.0.8.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.0.9.tar.gz' % URL
 FILES = ['README.rst',  'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
@@ -59,8 +59,8 @@ EXTRAS_REQUIRE = {
 }
 PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
     sys.executable)
-GS_COMMAND = ('gs pyecharts-snapshot v0.0.8 ' +
-              "Find 0.0.8 in changelog for more details")
+GS_COMMAND = ('gs pyecharts-snapshot v0.0.9 ' +
+              "Find 0.0.9 in changelog for more details")
 here = os.path.abspath(os.path.dirname(__file__))
 
 
