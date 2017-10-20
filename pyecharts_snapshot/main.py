@@ -57,7 +57,12 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         content = content.decode('utf-8')
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
-    base64_imagedata = content.split(',')[1]
+    content_array = content.split(',')
+    if len(content_array) != 2:
+        raise Exception("No snapshot taken by phantomjs. " +
+                        "Please make sure it is installed " +
+                        "and available on your path")
+    base64_imagedata = content_array[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type in ['pdf', 'gif']:
         save_as(imagedata, output_name, file_type)

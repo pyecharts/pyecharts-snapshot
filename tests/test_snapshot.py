@@ -125,6 +125,14 @@ def test_make_jpeg_snapshot(fake_popen):
     assert(filecmp.cmp(test_output, get_fixture('sample.jpeg')))
 
 
+@raises(Exception)
+@patch('subprocess.Popen')
+def test_phantomjs_fails(fake_popen):
+    fake_popen.return_value.stdout = BytesIO('abc')
+    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+                    'custom.jpeg')
+
+
 @patch('subprocess.Popen')
 def test_win32_shell_flag(fake_popen):
     fake_popen.side_effect = CustomTestException("Enough. Stop testing")
