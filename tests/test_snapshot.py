@@ -9,102 +9,101 @@ from platform import python_implementation
 from pyecharts_snapshot.main import main, make_a_snapshot, PY2
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
+HTML_FILE = os.path.join("tests", "fixtures", "render.html")
 
 
 class CustomTestException(Exception):
     pass
 
 
-@raises(SystemExit)
-def test_no_params():
-    args = ['snapshot']
-    with patch.object(sys, 'argv', args):
-        main()
+class TestMain():
 
+    def setUp(self):
+        self.patcher = patch('subprocess.Popen')
+        self.fake_popen = self.patcher.start()
+        self.patcher1 = patch('subprocess.call')
+        self.fake_call = self.patcher1.start()
 
-@patch('subprocess.Popen')
-def test_main(fake_popen):
-    fake_popen.return_value.stdout = BytesIO(get_base64_image())
-    args = ['snapshot', os.path.join("tests", "fixtures", "render.html")]
-    with patch.object(sys, 'argv', args):
-        main()
-    assert(filecmp.cmp('output.png', get_fixture('sample.png')))
+    def tearDown(self):
+        self.patcher1.stop()
+        self.patcher.stop()
 
-
-@patch('subprocess.Popen')
-def test_jpeg_at_command_line(fake_popen):
-    fake_popen.return_value.stdout = BytesIO(get_base64_image())
-    args = [
-        'snapshot', os.path.join("tests", "fixtures", "render.html"), 'jpeg']
-    with patch.object(sys, 'argv', args):
-        main()
-    assert(filecmp.cmp('output.jpeg', get_fixture('sample.jpeg')))
-
-
-@patch('subprocess.Popen')
-def test_pdf_at_command_line(fake_popen):
-    fake_popen.return_value.stdout = BytesIO(get_base64_image())
-    args = [
-        'snapshot', os.path.join("tests", "fixtures", "render.html"), 'pdf']
-    with patch.object(sys, 'argv', args):
-        main()
-    if PY27:
-        # do binary comaprision
-        assert(filecmp.cmp('output.pdf', get_fixture('sample.pdf')))
-    else:
-        # otherwise test the file is produced
-        assert(os.path.exists('output.pdf'))
-
-
-@patch('subprocess.Popen')
-def test_delay_option(fake_popen):
-    fake_popen.side_effect = Exception("Enough test. Abort")
-    sample_delay = 0.1
-    args = [
-        'snapshot', os.path.join("tests", "fixtures", "render.html"),
-        'jpeg', str(sample_delay)]
-    try:
+    @raises(SystemExit)
+    def test_no_params(self):
+        args = ['snapshot']
         with patch.object(sys, 'argv', args):
             main()
-    except Exception:
-        eq_(fake_popen.call_args[0][0][4], '100')
 
-
-@patch('subprocess.Popen')
-def test_windows_file_name(fake_popen):
-    fake_popen.side_effect = Exception("Enough test. Abort")
-    args = [
-        'snapshot', "tests\\fixtures\\render.html",
-        'jpeg', '0.1']
-    try:
+    def test_main(self):
+        self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
+        args = ['snapshot', HTML_FILE]
         with patch.object(sys, 'argv', args):
             main()
-    except Exception:
-        eq_(fake_popen.call_args[0][0][2], 'tests/fixtures/render.html')
+        assert(filecmp.cmp('output.png', get_fixture('sample.png')))
 
-
-@patch('subprocess.Popen')
-def test_default_delay_value(fake_popen):
-    fake_popen.side_effect = CustomTestException("Enough test. Abort")
-    args = [
-        'snapshot', os.path.join("tests", "fixtures", "render.html"),
-        'jpeg']
-    try:
+    def test_jpeg_at_command_line(self):
+        self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
+        args = [
+            'snapshot', HTML_FILE, 'jpeg']
         with patch.object(sys, 'argv', args):
             main()
-    except CustomTestException:
-        eq_(fake_popen.call_args[0][0][4], '500')
+        assert(filecmp.cmp('output.jpeg', get_fixture('sample.jpeg')))
 
+    def test_pdf_at_command_line(self):
+        self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
+        args = [
+            'snapshot', HTML_FILE, 'pdf']
+        with patch.object(sys, 'argv', args):
+            main()
+        if PY27:
+            # do binary comaprision
+            assert(filecmp.cmp('output.pdf', get_fixture('sample.pdf')))
+        else:
+            # otherwise test the file is produced
+            assert(os.path.exists('output.pdf'))
 
-@raises(Exception)
-@patch('subprocess.Popen')
-def test_unknown_file_type_at_command_line(fake_popen):
-    fake_popen.return_value.stdout = BytesIO(get_base64_image())
-    args = [
-        'snapshot', os.path.join("tests", "fixtures", "render.html"),
-        'moonwalk']
-    with patch.object(sys, 'argv', args):
-        main()
+    def test_delay_option(self):
+        self.fake_popen.side_effect = Exception("Enough test. Abort")
+        sample_delay = 0.1
+        args = [
+            'snapshot', HTML_FILE,
+            'jpeg', str(sample_delay)]
+        try:
+            with patch.object(sys, 'argv', args):
+                main()
+        except Exception:
+            eq_(self.fake_popen.call_args[0][0][4], '100')
+
+    def test_windows_file_name(self):
+        self.fake_popen.side_effect = Exception("Enough test. Abort")
+        args = [
+            'snapshot', "tests\\fixtures\\render.html",
+            'jpeg', '0.1']
+        try:
+            with patch.object(sys, 'argv', args):
+                main()
+        except Exception:
+            eq_(self.fake_popen.call_args[0][0][2],
+                'tests/fixtures/render.html')
+
+    def test_default_delay_value(self):
+        self.fake_popen.side_effect = CustomTestException("Enough test. Abort")
+        args = [
+            'snapshot', HTML_FILE,
+            'jpeg']
+        try:
+            with patch.object(sys, 'argv', args):
+                main()
+        except CustomTestException:
+            eq_(self.fake_popen.call_args[0][0][4], '500')
+
+    @raises(Exception)
+    def test_unknown_file_type_at_command_line(self):
+        self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
+        args = [
+            'snapshot', HTML_FILE, 'moonwalk']
+        with patch.object(sys, 'argv', args):
+            main()
 
 
 @patch('subprocess.Popen')
