@@ -34,6 +34,13 @@ class TestMain():
         with patch.object(sys, 'argv', args):
             main()
 
+    @raises(SystemExit)
+    def test_no_phamtonjs(self):
+        self.fake_call.side_effect = OSError
+        args = ['snapshot', 'a', 'b']
+        with patch.object(sys, 'argv', args):
+            main()
+
     def test_main(self):
         self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
         args = ['snapshot', HTML_FILE]

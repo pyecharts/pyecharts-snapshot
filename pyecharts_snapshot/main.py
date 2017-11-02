@@ -13,6 +13,7 @@ if PY2:
 else:
     from io import BytesIO
 
+PHANTOMJS_EXE = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
 DEFAULT_DELAY = 0.5
 
@@ -20,6 +21,12 @@ DEFAULT_DELAY = 0.5
 def main():
     if len(sys.argv) < 2 or len(sys.argv) > 4:
         raise sys.exit(-1)
+
+    try:
+        does_phantomjs_exist()
+    except OSError:
+        print("No phantomjs found in your path. Please install it!")
+        sys.exit(-1)
 
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
@@ -45,7 +52,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
 
     # add shell=True and it works on Windows now.
     proc_params = [
-        'phantomjs',
+        PHANTOMJS_EXE,
         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
         file_name.replace('\\', '/'),
         file_type,
@@ -103,3 +110,7 @@ def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
     resource_path = os.path.join(current_path, folder)
     return resource_path
+
+
+def does_phantomjs_exist():
+    subprocess.call([PHANTOMJS_EXE, '--version'])
