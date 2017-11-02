@@ -1,7 +1,13 @@
 Change log
 ===========
 
-0.0.9 - 23.10.2017
+0.1.1 - 2.11.2017
+--------------------------------------------------------------------------------
+
+#. Updated, `#7, <https://github.com/chfw/pyecharts-snapshot/pull/7>`_: helpful
+   error message on missing phantomjs.
+
+0.1.0 - 23.10.2017
 --------------------------------------------------------------------------------
 
 #. pyexcel `#105 <https://github.com/pyexcel/pyexcel/issues/105>`_, remove gease
