@@ -1,13 +1,18 @@
 Change log
 ===========
 
-0.1.1 - 2.11.2017
+0.1.0 - 15.12.2017
+--------------------------------------------------------------------------------
+
+#. Updated, support Mac OS Retina display, high resolution screenshots
+
+0.0.11 - 2.11.2017
 --------------------------------------------------------------------------------
 
 #. Updated, `#7, <https://github.com/chfw/pyecharts-snapshot/pull/7>`_: helpful
    error message on missing phantomjs.
 
-0.1.0 - 23.10.2017
+0.0.10 - 23.10.2017
 --------------------------------------------------------------------------------
 
 #. pyexcel `#105 <https://github.com/pyexcel/pyexcel/issues/105>`_, remove gease

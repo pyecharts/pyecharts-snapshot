@@ -9,7 +9,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.0.11'
+VERSION = '0.1.0'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -22,7 +22,7 @@ DESCRIPTION = (
     ''
 )
 URL = 'https://github.com/chfw/pyecharts-snapshot'
-DOWNLOAD_URL = '%s/archive/0.0.11.tar.gz' % URL
+DOWNLOAD_URL = '%s/archive/0.1.0.tar.gz' % URL
 FILES = ['README.rst',  'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
@@ -60,8 +60,8 @@ EXTRAS_REQUIRE = {
 # You do not need to read beyond this line
 PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
     sys.executable)
-GS_COMMAND = ('gs pyecharts-snapshot v0.0.11 ' +
-              "Find 0.0.11 in changelog for more details")
+GS_COMMAND = ('gs pyecharts-snapshot v0.1.0 ' +
+              "Find 0.1.0 in changelog for more details")
 NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
                  'Please install gease to enable it.')
 UPLOAD_FAILED_MSG = (

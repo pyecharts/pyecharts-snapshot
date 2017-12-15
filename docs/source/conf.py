@@ -16,8 +16,8 @@ master_doc = 'index'
 
 project = u'pyecharts-snapshot'
 copyright = u'2017 Onni Software Ltd.'
-version = '0.0.11'
-release = '0.0.11'
+version = '0.1.0'
+release = '0.1.0'
 exclude_patterns = []
 pygments_style = 'sphinx'
 html_theme = 'default'
