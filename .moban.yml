@@ -1,5 +1,4 @@
 configuration:
-  configuration_dir: "commons/config"
   template_dir:
   - "setupmobans/templates"
   - ".moban.d"
