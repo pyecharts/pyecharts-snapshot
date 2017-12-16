@@ -130,7 +130,7 @@ In order to get a pdf file, you can do the following instead:
 Here is the snapshot in pdf:
 
 .. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot_in_pdf.png
-   :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/snapshot.pdf
+   :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/snapshot_in_pdf.pdf
    :width: 800px
 
 
