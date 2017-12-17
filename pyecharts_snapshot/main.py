@@ -44,12 +44,10 @@ def main():
 
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     file_type = output_name.split('.')[-1]
-    pixel_ratio = 1
+    pixel_ratio = 2
     shell_flag = False
     if sys.platform == 'win32':
         shell_flag = True
-    if sys.platform == 'darwin':
-        pixel_ratio = 2
     __actual_delay_in_ms = int(delay * 1000)
 
     # add shell=True and it works on Windows now.
