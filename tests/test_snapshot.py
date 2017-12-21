@@ -102,7 +102,7 @@ class TestMain():
             with patch.object(sys, 'argv', args):
                 main()
         except CustomTestException:
-            eq_(self.fake_popen.call_args[0][0][4], '500')
+            eq_(self.fake_popen.call_args[0][0][4], '1500')
 
     @raises(Exception)
     def test_unknown_file_type_at_command_line(self):

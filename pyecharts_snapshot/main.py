@@ -15,7 +15,7 @@ else:
 
 PHANTOMJS_EXE = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
-DEFAULT_DELAY = 0.5
+DEFAULT_DELAY = 1.5
 
 
 def main():
