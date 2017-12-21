@@ -2,11 +2,11 @@
 pyecharts-snapshot
 ================================================================================
 
-.. image:: https://api.travis-ci.org/chfw/pyecharts-snapshot.svg?branch=master
-   :target: http://travis-ci.org/chfw/pyecharts-snapshot
+.. image:: https://api.travis-ci.org/pyecharts/pyecharts-snapshot.svg?branch=master
+   :target: http://travis-ci.org/pyecharts/pyecharts-snapshot
 
-.. image:: https://codecov.io/gh/chfw/pyecharts-snapshot/branch/master/graph/badge.svg
-    :target: https://codecov.io/github/chfw/pyecharts-snapshot
+.. image:: https://codecov.io/gh/pyecharts/pyecharts-snapshot/branch/master/graph/badge.svg
+    :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
 
 Introduction
 ================================================================================
@@ -28,7 +28,7 @@ Get png:
 
 And you will get:
 
-.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo.png
+.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/demo.png
    :width: 800px
 
 Get pdf:
@@ -39,11 +39,11 @@ Get pdf:
 
 And you will get:
 
-.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/demo_in_pdf.png
-   :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/grid.pdf
+.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/demo_in_pdf.png
+   :target: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/examples/grid.pdf
    :width: 800px
 
-And here the code to `generate it <https://github.com/chfw/pyecharts-snapshot/blob/master/examples/grid.py>`_
+And here the code to `generate it <https://github.com/pyecharts/pyecharts-snapshot/blob/master/examples/grid.py>`_
 
 
 Usage details
@@ -95,7 +95,7 @@ Here's a fully working example code to get a png image:
 
 Here is the snapshot:
 
-.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot.png
+.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/snapshot.png
    :width: 800px
 
 In order to get a pdf file, you can do the following instead:
@@ -129,8 +129,8 @@ In order to get a pdf file, you can do the following instead:
 
 Here is the snapshot in pdf:
 
-.. image:: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/images/snapshot_in_pdf.png
-   :target: https://raw.githubusercontent.com/chfw/pyecharts-snapshot/master/examples/snapshot_in_pdf.pdf
+.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/snapshot_in_pdf.png
+   :target: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/examples/snapshot_in_pdf.pdf
    :width: 800px
 
 
@@ -179,7 +179,7 @@ or clone it and install it:
 
 .. code-block:: bash
 
-    $ git clone http://github.com/chfw/pyecharts-snapshot.git
+    $ git clone http://github.com/pyecharts/pyecharts-snapshot.git
     $ cd pyecharts-snapshot
     $ python setup.py install
 
