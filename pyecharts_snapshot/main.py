@@ -5,7 +5,7 @@ import sys
 import base64
 from PIL import Image
 import subprocess
-import webbrowser
+
 
 PY2 = sys.version_info[0] == 2
 
@@ -22,7 +22,7 @@ DEFAULT_DELAY = 1.5
 def main():
     if len(sys.argv) < 2 or len(sys.argv) > 4:
         if len(sys.argv) == 2:
-            webbrowser.open('https://github.com/pyecharts/pyecharts-snapshot')
+            print('https://github.com/pyecharts/pyecharts-snapshot')
             exit(0)
         else:
             print('''Usage:   ''', end='')
