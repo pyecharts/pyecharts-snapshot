@@ -24,7 +24,8 @@ def main():
             webbrowser.open('https://github.com/pyecharts/pyecharts-snapshot')
             exit(0)
         else:
-            print('''Usage:   snapshot {input file} {output file [png|jpeg|gif|pdf]} {delay_in_seconds}''')
+            print('''Usage:   ''', end='')
+            print('snapshot {input file} {output file [png|jpeg|gif|pdf]} {delay_in_seconds}')
             print('''         snapshot --online_help for help online.''')
             exit(-1)
     chk_phantomjs()
