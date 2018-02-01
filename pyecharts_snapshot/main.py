@@ -6,6 +6,7 @@ import base64
 from PIL import Image
 import subprocess
 import webbrowser
+
 PY2 = sys.version_info[0] == 2
 
 if PY2:
@@ -24,7 +25,7 @@ def main():
             webbrowser.open('https://github.com/pyecharts/pyecharts-snapshot')
             exit(0)
         else:
-            print('''Usage:   ''',end='')
+            print('''Usage:   ''', end='')
             print(
                 'snapshot {input file} {output file [png|jpeg|gif|pdf]}',
                 end=' ')
@@ -130,4 +131,6 @@ def chk_phantomjs():
     except OSError:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(-1)
+
+
 main()
