@@ -28,7 +28,7 @@ def main():
             print(
                 'snapshot {input file} {output file [png|jpeg|gif|pdf]}',
                 end=' ')
-            print('{delay_in_seconds}',end='\n')
+            print('{delay_in_seconds}', end='\n')
             print('''         snapshot --online_help for help online.''')
             exit(-1)
     chk_phantomjs()
@@ -74,7 +74,8 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     content_array = content.split(',')
     if len(content_array) != 2:
         raise OSError(
-            "No snapshot taken by phantomjs. Please make sure it is installed and available on your PATH!")
+            "No snapshot taken by phantomjs. "
+            "Please make sure it is installed and available on your PATH!")
     base64_imagedata = content_array[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type in ['pdf', 'gif']:
