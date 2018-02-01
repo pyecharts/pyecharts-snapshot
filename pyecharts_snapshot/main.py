@@ -103,7 +103,7 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print('File saved in ' + os.getcwd() + '/' + output_name)
+    print('File rendered in ' + os.getcwd() + '/' + output_name)
 
 
 def save_as(imagedata, output_name, file_type):
