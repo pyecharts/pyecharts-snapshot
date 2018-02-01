@@ -34,7 +34,7 @@ def main():
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
         if file_type in ['pdf', 'jpeg', 'gif']:
-            output = 'output.%s'%(file_type)
+            output = 'output.%s' % (file_type)
         elif file_type != 'png':
             raise IOError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
         if len(sys.argv) == 4:
@@ -96,7 +96,7 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print('File saved in '+os.getcwd()+'/'+output_name)
+    print('File saved in ' + os.getcwd() + '/' + output_name)
 
 
 def save_as(imagedata, output_name, file_type):
@@ -113,10 +113,12 @@ def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
     resource_path = os.path.join(current_path, folder)
     return resource_path
+
+
 def chk_phantomjs():
     try:
         PHANTOMJS_VERSION = (subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode('utf8')
-        print("\nphantomjs version: %s"%PHANTOMJS_VERSION)
+        print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except OSError:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(-1)
