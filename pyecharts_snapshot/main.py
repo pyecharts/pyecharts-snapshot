@@ -27,7 +27,7 @@ def main():
         else:
             print('''Usage:   ''', end='')
             print(
-                'snapshot {input file} {output file [png|jpeg|gif|pdf]}',
+                'snapshot {input file} {output type:[png|jpeg|gif|pdf]}',
                 end=' ')
             print('{delay_in_seconds}', end='\n')
             print('''         snapshot --online_help for help online.''')
