@@ -14,7 +14,7 @@ else:
     from io import BytesIO
 
 PHANTOMJS_EXEC = "phantomjs"
-NOT_SUPPORTED_FILE_TYPE = "Do not support file type {}"
+NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
 DEFAULT_DELAY = 1.5
 
 
@@ -27,19 +27,14 @@ def main():
             print('''Usage:   snapshot {input file} {output file [png|jpeg|gif|pdf]} {delay_in_seconds}''')
             print('''         snapshot --online_help for help online.''')
             exit(-1)
-    try:
-        PHANTOMJS_VERSION = (subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode('utf8')
-        print("\nphantomjs version: {}".format(PHANTOMJS_VERSION))
-    except OSError:
-        print("No phantomjs found in your PATH. Please install it!")
-        sys.exit(-1)
+    chk_phantomjs()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
         if file_type in ['pdf', 'jpeg', 'gif']:
-            output = 'output.{}'.format(file_type)
+            output = 'output.%s'%(file_type)
         elif file_type != 'png':
             raise IOError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
         if len(sys.argv) == 4:
@@ -101,7 +96,7 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print('File saved in {}/{}'.format(os.getcwd(),output_name))
+    print('File saved in %s/%s') % (os.getcwd(), output_name)
 
 
 def save_as(imagedata, output_name, file_type):
@@ -111,11 +106,17 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-    print('File saved in {}/{}'.format(os.getcwd(), output_name))
+    print('File saved in %s/%s')%(os.getcwd(), output_name)
+
 
 def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
     resource_path = os.path.join(current_path, folder)
     return resource_path
-
-
+def chk_phantomjs():
+    try:
+        PHANTOMJS_VERSION = (subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode('utf8')
+        print("\nphantomjs version: %s"%(PHANTOMJS_VERSION))
+    except OSError:
+        print("No phantomjs found in your PATH. Please install it!")
+        sys.exit(-1)
