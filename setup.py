@@ -17,7 +17,7 @@ ENTRY_POINTS = {
     ]
 }
 DESCRIPTION = (
-    'save pyecharts output file as image' +
+        'renders pyecharts output file as image' +
     ''
 )
 URL = 'https://github.com/pyecharts/pyecharts-snapshot'
