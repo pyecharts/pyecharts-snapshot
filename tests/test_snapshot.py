@@ -79,7 +79,7 @@ class TestMain():
             with patch.object(sys, 'argv', args):
                 main()
         except Exception:
-            eq_(self.fake_popen.call_args[0][0][4], '100')
+            eq_(self.fake_popen.call_args[0][0][2], '100')
 
     def test_windows_file_name(self):
         self.fake_popen.side_effect = Exception("Enough test. Abort")

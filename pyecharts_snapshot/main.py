@@ -96,7 +96,7 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print('File saved in %s/%s') % (os.getcwd(), output_name)
+    print('File saved in '+os.getcwd()+'/'+output_name)
 
 
 def save_as(imagedata, output_name, file_type):
@@ -106,7 +106,7 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-    print('File saved in %s/%s')%(os.getcwd(), output_name)
+    print('File saved in %s/%s' % (os.getcwd(), output_name))
 
 
 def get_resource_dir(folder):
@@ -116,7 +116,7 @@ def get_resource_dir(folder):
 def chk_phantomjs():
     try:
         PHANTOMJS_VERSION = (subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode('utf8')
-        print("\nphantomjs version: %s"%(PHANTOMJS_VERSION))
+        print("\nphantomjs version: %s"%PHANTOMJS_VERSION)
     except OSError:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(-1)
