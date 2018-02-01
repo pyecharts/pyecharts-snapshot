@@ -25,7 +25,10 @@ def main():
             exit(0)
         else:
             print('''Usage:   ''', end='')
-            print('snapshot {input file} {output file [png|jpeg|gif|pdf]} {delay_in_seconds}')
+            print(
+                'snapshot {input file} {output file [png|jpeg|gif|pdf]}',
+                end=' ')
+            print('{delay_in_seconds}',end='\n')
             print('''         snapshot --online_help for help online.''')
             exit(-1)
     chk_phantomjs()
@@ -70,7 +73,8 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     content_array = content.split(',')
     if len(content_array) != 2:
-        raise OSError("No snapshot taken by phantomjs. Please make sure it is installed and available on your PATH!")
+        raise OSError(
+            "No snapshot taken by phantomjs. Please make sure it is installed and available on your PATH!")
     base64_imagedata = content_array[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type in ['pdf', 'gif']:
@@ -118,7 +122,9 @@ def get_resource_dir(folder):
 
 def chk_phantomjs():
     try:
-        PHANTOMJS_VERSION = (subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode('utf8')
+        PHANTOMJS_VERSION = (
+            subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
+            'utf8')
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except OSError:
         print("No phantomjs found in your PATH. Please install it!")
