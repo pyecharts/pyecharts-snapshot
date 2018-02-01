@@ -1,4 +1,3 @@
-# Template by setupmobans
 import os
 import sys
 import codecs
@@ -18,7 +17,7 @@ ENTRY_POINTS = {
     ]
 }
 DESCRIPTION = (
-    'renders pyecharts as image' +
+    'save pyecharts output file as image' +
     ''
 )
 URL = 'https://github.com/pyecharts/pyecharts-snapshot'
