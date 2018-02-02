@@ -133,11 +133,13 @@ def get_resource_dir(folder):
 
 
 def chk_phantomjs():
-    try:
+    subprocess.check_output([PHANTOMJS_EXEC, '--version']).decode(
+    'utf8')
+    '''try:
         PHANTOMJS_VERSION = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf8')
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
-        sys.exit(0)
+        sys.exit(0)'''
