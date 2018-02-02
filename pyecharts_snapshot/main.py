@@ -133,9 +133,10 @@ def get_resource_dir(folder):
 
 
 def chk_phantomjs():
-    subprocess.check_output([PHANTOMJS_EXEC, '--version']).decode(
+    os.system('phantomjs --version')
+    '''subprocess.check_output([PHANTOMJS_EXEC, '--version']).decode(
     'utf8')
-    '''try:
+    try:
         PHANTOMJS_VERSION = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf8')
