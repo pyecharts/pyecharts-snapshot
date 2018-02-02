@@ -26,7 +26,7 @@ def main():
             help = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay_in_seconds}
          snapshot --online_help for help online.'''
             print(help)
-            exit(1)
+            exit(0)
     chk_phantomjs()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
@@ -125,7 +125,4 @@ def chk_phantomjs():
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except OSError:
         print("No phantomjs found in your PATH. Please install it!")
-        sys.exit(-1)
-
-
-main()
+        sys.exit(0)
