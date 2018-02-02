@@ -19,23 +19,26 @@ DEFAULT_DELAY = 1.5
 
 def main():
     help = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
-         
          snapshot help: display this help message
          snapshot help online: document online.'''
-    if len(sys.argv) <= 2 or len(sys.argv) > 4:
+    if len(sys.argv) < 2:
+        print('Missing required arguments! snapshot help for more information.')
+        exit(0)
+    else:
         if sys.argv[1] == 'help':
             try:
-                if sys.argv[2] == 'online':
-                    print('https://github.com/pyecharts/pyecharts-snapshot')
-                    exit(0)
+                online = sys.argv[2]
+                if online=='online':
+                 print('https://github.com/pyecharts/pyecharts-snapshot')
+                 exit(0)
                 else:
-                    pass
+                    raise Exception
             except Exception:
                 print(help)
                 exit(0)
         else:
-            print(help)
-            exit(0)
+            pass
+
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
@@ -69,6 +72,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         str(__actual_delay_in_ms),
         str(pixel_ratio)
     ]
+    print(proc_params)
     proc = subprocess.Popen(
         proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:
@@ -77,6 +81,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     content_array = content.split(',')
+    print(content_array)
     if len(content_array) != 2:
         raise OSError(
             "No snapshot taken by phantomjs. "
@@ -122,6 +127,7 @@ def save_as(imagedata, output_name, file_type):
 
 def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
+    print(current_path)
     resource_path = os.path.join(current_path, folder)
     return resource_path
 
@@ -134,7 +140,4 @@ def chk_phantomjs():
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
-        sys.exit(0)
-
-
-main()
+        exit(0)
