@@ -23,19 +23,19 @@ def main():
          snapshot help online: document online.'''
     if len(sys.argv) < 2:
         print('Missing required arguments! snapshot help for more information.')
-        exit(0)
+        sys.exit(0)
     else:
         if sys.argv[1] == 'help':
             try:
                 online = sys.argv[2]
                 if online=='online':
                  print('https://github.com/pyecharts/pyecharts-snapshot')
-                 exit(0)
+                 sys.exit(0)
                 else:
                     raise Exception
             except Exception:
                 print(help)
-                exit(0)
+                sys.exit(0)
         else:
             pass
 
@@ -140,4 +140,4 @@ def chk_phantomjs():
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
-        exit(0)
+        sys.exit(0)
