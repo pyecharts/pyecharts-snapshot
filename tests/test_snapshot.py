@@ -21,7 +21,7 @@ class TestMain():
     def setUp(self):
         self.patcher = patch('subprocess.Popen')
         self.fake_popen = self.patcher.start()
-        self.patcher1 = patch('subprocess.call')
+        self.patcher1 = patch('subprocess.check_output')
         self.fake_call = self.patcher1.start()
 
     def tearDown(self):
