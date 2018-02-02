@@ -14,9 +14,11 @@ else:
 PHANTOMJS_EXEC = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
-HELP= '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
+HELP = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
          snapshot help: display this help message
          snapshot help online: document online.'''
+
+
 def main():
     chk_phantomjs()
     if len(sys.argv) < 2:
@@ -26,9 +28,9 @@ def main():
         if sys.argv[1] == 'help':
             try:
                 online = sys.argv[2]
-                if online=='online':
-                 print('https://github.com/pyecharts/pyecharts-snapshot')
-                 sys.exit(0)
+                if online == 'online':
+                    print('https://github.com/pyecharts/pyecharts-snapshot')
+                    sys.exit(0)
                 else:
                     raise Exception
             except Exception:
