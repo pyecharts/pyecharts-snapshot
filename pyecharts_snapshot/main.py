@@ -17,8 +17,8 @@ DEFAULT_DELAY = 1.5
 HELP= '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
          snapshot help: display this help message
          snapshot help online: document online.'''
-chk_phantomjs()
 def main():
+    chk_phantomjs()
     if len(sys.argv) < 2:
         print(HELP)
         sys.exit(0)
