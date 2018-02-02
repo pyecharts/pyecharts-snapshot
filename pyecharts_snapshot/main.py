@@ -11,17 +11,16 @@ if PY2:
     from StringIO import StringIO as BytesIO
 else:
     from io import BytesIO
-
 PHANTOMJS_EXEC = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
 HELP= '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
          snapshot help: display this help message
          snapshot help online: document online.'''
-
+chk_phantomjs()
 def main():
     if len(sys.argv) < 2:
-        print('snapshot help')
+        print(HELP)
         sys.exit(0)
     else:
         if sys.argv[1] == 'help':
@@ -49,7 +48,6 @@ def main():
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
-    chk_phantomjs()
     make_a_snapshot(file_name, output, delay=delay)
 
 
