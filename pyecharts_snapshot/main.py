@@ -146,4 +146,3 @@ def chk_phantomjs():
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(0)
-        
