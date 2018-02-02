@@ -5,7 +5,6 @@ import base64
 from PIL import Image
 import subprocess
 
-
 PY2 = sys.version_info[0] == 2
 
 if PY2:
@@ -14,21 +13,29 @@ else:
     from io import BytesIO
 
 PHANTOMJS_EXEC = "phantomjs"
-NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
+NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
 
 
 def main():
-    if len(sys.argv) < 2 or len(sys.argv) > 4:
-        if len(sys.argv) == 2:
-            print('https://github.com/pyecharts/pyecharts-snapshot')
-            exit(0)
+    help = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
+         
+         snapshot help: display this help message
+         snapshot help online: document online.'''
+    if len(sys.argv) <= 2 or len(sys.argv) > 4:
+        if sys.argv[1] == 'help':
+            try:
+                if sys.argv[2] == 'online':
+                    print('https://github.com/pyecharts/pyecharts-snapshot')
+                    exit(0)
+                else:
+                    pass
+            except Exception:
+                print(help)
+                exit(0)
         else:
-            help = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay_in_seconds}
-         snapshot --online_help for help online.'''
             print(help)
             exit(0)
-    chk_phantomjs()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
@@ -37,9 +44,10 @@ def main():
         if file_type in ['pdf', 'jpeg', 'gif']:
             output = 'output.%s' % (file_type)
         elif file_type != 'png':
-            raise IOError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
+            raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
+    chk_phantomjs()
     make_a_snapshot(file_name, output, delay=delay)
 
 
@@ -80,7 +88,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     elif file_type in ['png', 'jpeg']:
         save_as_png(imagedata, output_name)
     else:
-        raise IOError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
+        raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
 
 
 def decode_base64(data):
@@ -124,6 +132,9 @@ def chk_phantomjs():
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf8')
         print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
-    except OSError:
+    except Exception:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(0)
+
+
+main()
