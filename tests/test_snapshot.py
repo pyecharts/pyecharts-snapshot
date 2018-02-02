@@ -79,6 +79,7 @@ class TestMain():
             with patch.object(sys, 'argv', args):
                 main()
         except Exception:
+            print(self.fake_popen.call_args)
             eq_(self.fake_popen.call_args[0][0][4], '100')
 
     def test_windows_file_name(self):
@@ -90,6 +91,7 @@ class TestMain():
             with patch.object(sys, 'argv', args):
                 main()
         except Exception:
+            print(self.fake_popen.call_args)
             eq_(self.fake_popen.call_args[0][0][2],
                 'tests/fixtures/render.html')
 
@@ -102,6 +104,7 @@ class TestMain():
             with patch.object(sys, 'argv', args):
                 main()
         except CustomTestException:
+            print(self.fake_popen.call_args)
             eq_(self.fake_popen.call_args[0][0][4], '1500')
 
     @raises(Exception)
