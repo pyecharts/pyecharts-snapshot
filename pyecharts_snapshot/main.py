@@ -1,3 +1,4 @@
+from __future__ import print_function
 import io
 import os
 import sys
@@ -14,15 +15,20 @@ else:
 PHANTOMJS_EXEC = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
-HELP = '''Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} {delay in seconds}
-         snapshot help: display this help message
-         snapshot help online: document online.'''
+
+
+def show_help():
+    print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
+          end='')
+    print('{delay in seconds}\n', end='')
+    print('         snapshot help: display this help message\n'
+          '         snapshot help online: document online.')
 
 
 def main():
     chk_phantomjs()
     if len(sys.argv) < 2:
-        print(HELP)
+        show_help()
         sys.exit(0)
     else:
         if sys.argv[1] == 'help':
@@ -34,7 +40,7 @@ def main():
                 else:
                     raise Exception
             except Exception:
-                print(HELP)
+                show_help()
                 sys.exit(0)
         else:
             pass
@@ -133,10 +139,11 @@ def get_resource_dir(folder):
 
 def chk_phantomjs():
     try:
-        PHANTOMJS_VERSION = (
+        phantomjs_version = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf8')
-        print("\nphantomjs version: %s" % PHANTOMJS_VERSION)
+        print("\nphantomjs version: %s" % phantomjs_version)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(0)
+show_help()
