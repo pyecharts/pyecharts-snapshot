@@ -21,8 +21,8 @@ def show_help():
     print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
           end='')
     print('{delay in seconds}\n', end='')
-    print('         snapshot help: display this help message\n'
-          '         snapshot help online: document online.')
+    print('''         snapshot help: display this help message
+         snapshot help online: document online.''')
 
 
 def main():
