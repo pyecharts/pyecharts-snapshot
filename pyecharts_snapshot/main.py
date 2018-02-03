@@ -3,8 +3,8 @@ import io
 import os
 import sys
 import base64
-from PIL import Image
 import subprocess
+from PIL import Image
 
 PY2 = sys.version_info[0] == 2
 
@@ -33,8 +33,6 @@ def main():
     else:
         if sys.argv[1] == 'help':
             show_help()
-        else:
-            pass
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
