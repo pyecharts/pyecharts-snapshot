@@ -23,6 +23,7 @@ def show_help():
     print('{delay in seconds}\n', end='')
     print('''         snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot''')
+    sys.exit(0)
 
 
 def main():
@@ -67,7 +68,6 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         str(__actual_delay_in_ms),
         str(pixel_ratio)
     ]
-    print(proc_params)
     proc = subprocess.Popen(
         proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:
@@ -132,7 +132,7 @@ def chk_phantomjs():
         phantomjs_version = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf8')
-        print("\nphantomjs version: %s" % phantomjs_version)
+        print("phantomjs version: %s" % phantomjs_version)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
         sys.exit(1)
