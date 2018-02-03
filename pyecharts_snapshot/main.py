@@ -30,7 +30,6 @@ def main():
     chk_phantomjs()
     if len(sys.argv) < 2:
         show_help()
-        sys.exit(1)
     else:
         if sys.argv[1] == 'help':
             show_help()

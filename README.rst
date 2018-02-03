@@ -1,6 +1,7 @@
 ================================================================================
 pyecharts-snapshot
 ================================================================================
+
 .. image:: https://api.travis-ci.org/pyecharts/pyecharts-snapshot.svg?branch=master
    :target: http://travis-ci.org/pyecharts/pyecharts-snapshot
 
@@ -185,7 +186,7 @@ or clone it and install it:
 Test status
 ================================================================================
 
-Fully tested on pypy, python 2.7, 3.3, 3.4, 3.5 and 3.6.
+Fully tested on pypy, python  2.7, 3.3, 3.4, 3.5 and 3.6.
 
 Constraints
 ================================================================================
