@@ -29,7 +29,7 @@ def main():
     chk_phantomjs()
     if len(sys.argv) < 2:
         show_help()
-        sys.exit(0)
+        sys.exit(1)
     else:
         if sys.argv[1] == 'help':
             show_help()
@@ -135,4 +135,4 @@ def chk_phantomjs():
         print("\nphantomjs version: %s" % phantomjs_version)
     except Exception:
         print("No phantomjs found in your PATH. Please install it!")
-        sys.exit(0)
+        sys.exit(1)
