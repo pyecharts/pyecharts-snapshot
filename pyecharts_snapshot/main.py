@@ -22,7 +22,7 @@ def show_help():
           end='')
     print('{delay in seconds}\n', end='')
     print('''         snapshot help: display this help message
-         snapshot help online: document online.''')
+         document online:github.com/pyecharts/pyecharts-snapshot''')
 
 
 def main():
@@ -32,19 +32,9 @@ def main():
         sys.exit(0)
     else:
         if sys.argv[1] == 'help':
-            try:
-                online = sys.argv[2]
-                if online == 'online':
-                    print('https://github.com/pyecharts/pyecharts-snapshot')
-                    sys.exit(0)
-                else:
-                    raise Exception
-            except Exception:
-                show_help()
-                sys.exit(0)
+            show_help()
         else:
             pass
-
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
