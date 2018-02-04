@@ -28,13 +28,11 @@ class TestMain():
         self.patcher1.stop()
         self.patcher.stop()
 
-    @raises(SystemExit)
     def test_no_params(self):
         args = ['snapshot']
         with patch.object(sys, 'argv', args):
             main()
 
-    @raises(SystemExit)
     def test_no_phamtonjs(self):
         self.fake_call.side_effect = OSError
         args = ['snapshot', 'a', 'b']
