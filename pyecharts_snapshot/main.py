@@ -25,24 +25,25 @@ def show_help():
          document online:github.com/pyecharts/pyecharts-snapshot''')
 
 
-
 def main():
     chk_phantomjs()
+    need_help = False
     if len(sys.argv) <= 2:
         show_help()
-        sys.exit(1)
-    file_name = sys.argv[1]
-    delay = DEFAULT_DELAY
-    output = 'output.png'
-    if len(sys.argv) >= 3:
-        file_type = sys.argv[2]
-        if file_type in ['pdf', 'jpeg', 'gif']:
-            output = 'output.%s' % (file_type)
-        elif file_type != 'png':
-            raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
-        if len(sys.argv) == 4:
-            delay = float(sys.argv[3])  # in seconds
-    make_a_snapshot(file_name, output, delay=delay)
+        need_help = True
+    if need_help == False:
+        file_name = sys.argv[1]
+        delay = DEFAULT_DELAY
+        output = 'output.png'
+        if len(sys.argv) >= 3:
+            file_type = sys.argv[2]
+            if file_type in ['pdf', 'jpeg', 'gif']:
+                output = 'output.%s' % (file_type)
+            elif file_type != 'png':
+                raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
+            if len(sys.argv) == 4:
+                delay = float(sys.argv[3])  # in seconds
+        make_a_snapshot(file_name, output, delay=delay)
 
 
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
