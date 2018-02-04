@@ -1,3 +1,4 @@
+from __future__ import print_function
 import io
 import os
 import sys
@@ -5,44 +6,46 @@ import base64
 import subprocess
 from PIL import Image
 
-
 PY2 = sys.version_info[0] == 2
 
 if PY2:
     from StringIO import StringIO as BytesIO
 else:
     from io import BytesIO
-
-PHANTOMJS_EXE = "phantomjs"
-NOT_SUPPORTED_FILE_TYPE = "Do not support file type %s"
+PHANTOMJS_EXEC = "phantomjs"
+NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
 
 
+def show_help():
+    print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
+          end='')
+    print('{delay in seconds}\n', end='')
+    print('''         snapshot help: display this help message
+         document online:github.com/pyecharts/pyecharts-snapshot''')
+    exit(0)
+
+
 def main():
-    if len(sys.argv) < 2 or len(sys.argv) > 4:
-        raise sys.exit(-1)
-
-    try:
-        does_phantomjs_exist()
-    except OSError:
-        print("No phantomjs found in your path. Please install it!")
-        sys.exit(-1)
-
+    chk_phantomjs()
+    if len(sys.argv) <= 2:
+        show_help()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
         if file_type in ['pdf', 'jpeg', 'gif']:
-            output = 'output.%s' % file_type
+            output = 'output.%s' % (file_type)
         elif file_type != 'png':
-            raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
+            raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
     make_a_snapshot(file_name, output, delay=delay)
 
 
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
+    print('Generating file ...')
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2
     shell_flag = False
@@ -52,7 +55,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
 
     # add shell=True and it works on Windows now.
     proc_params = [
-        PHANTOMJS_EXE,
+        PHANTOMJS_EXEC,
         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
         file_name.replace('\\', '/'),
         file_type,
@@ -67,10 +70,11 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     content_array = content.split(',')
+    print(content_array)
     if len(content_array) != 2:
-        raise Exception("No snapshot taken by phantomjs. " +
-                        "Please make sure it is installed " +
-                        "and available on your path")
+        raise OSError(
+            "No snapshot taken by phantomjs. "
+            "Please make sure it is installed and available on your PATH!")
     base64_imagedata = content_array[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type in ['pdf', 'gif']:
@@ -78,7 +82,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     elif file_type in ['png', 'jpeg']:
         save_as_png(imagedata, output_name)
     else:
-        raise Exception(NOT_SUPPORTED_FILE_TYPE % file_type)
+        raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
 
 
 def decode_base64(data):
@@ -95,8 +99,9 @@ def decode_base64(data):
 
 
 def save_as_png(imagedata, output_name):
-    with open(output_name, "wb") as g:
-        g.write(imagedata)
+    with open(output_name, "wb") as f:
+        f.write(imagedata)
+    print('File rendered in ' + os.getcwd() + '/' + output_name)
 
 
 def save_as(imagedata, output_name, file_type):
@@ -105,14 +110,23 @@ def save_as(imagedata, output_name, file_type):
     color = (255, 255, 255)
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
-    b.save(output_name, file_type.upper(), quality=100)
+    b.save(output_name, file_type, quality=100)
+    print('File saved in %s/%s' % (os.getcwd(), output_name))
 
 
 def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
+    print(current_path)
     resource_path = os.path.join(current_path, folder)
     return resource_path
 
 
-def does_phantomjs_exist():
-    subprocess.call([PHANTOMJS_EXE, '--version'])
+def chk_phantomjs():
+    try:
+        phantomjs_version = (
+            subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
+            'utf8')
+        print("phantomjs version: %s" % phantomjs_version)
+    except Exception:
+        print("No phantomjs found in your PATH. Please install it!")
+        sys.exit(1)
