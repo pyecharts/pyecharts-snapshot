@@ -18,21 +18,18 @@ DEFAULT_DELAY = 1.5
 
 
 def show_help():
-    print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
+    if len(sys.argv) <= 2:
+        print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
           end='')
-    print('{delay in seconds}\n', end='')
-    print('''         snapshot help: display this help message
+        print('{delay in seconds}\n', end='')
+        print('''         snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot''')
-    sys.exit(0)
+        sys.exit(0)
 
 
 def main():
     chk_phantomjs()
-    if len(sys.argv) < 2:
-        show_help()
-    else:
-        if sys.argv[1] == 'help':
-            show_help()
+    show_help()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
