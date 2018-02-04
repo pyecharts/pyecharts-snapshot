@@ -25,6 +25,7 @@ def show_help():
          document online:github.com/pyecharts/pyecharts-snapshot''')
     exit(0)
 
+
 def main():
     chk_phantomjs()
     if len(sys.argv) <= 2:
