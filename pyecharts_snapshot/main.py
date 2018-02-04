@@ -24,7 +24,7 @@ def show_help():
         print('{delay in seconds}\n', end='')
         print('''         snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot''')
-        sys.exit(0)
+    sys.exit(0)
 
 
 def main():
