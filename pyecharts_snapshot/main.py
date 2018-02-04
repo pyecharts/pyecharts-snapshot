@@ -23,13 +23,12 @@ def show_help():
     print('{delay in seconds}\n', end='')
     print('''         snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot''')
-
+    exit(0)
 
 def main():
     chk_phantomjs()
     if len(sys.argv) <= 2:
         show_help()
-        exit(1)
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'
