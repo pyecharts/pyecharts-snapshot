@@ -30,7 +30,7 @@ def main():
     chk_phantomjs()
     if len(sys.argv) <= 2:
         show_help()
-        sys.exit(0)
+        sys.exit(1)
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
     output = 'output.png'

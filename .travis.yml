@@ -12,7 +12,7 @@ python:
 before_install:
   - if [[ $TRAVIS_PYTHON_VERSION == "2.6" ]]; then pip install flake8==2.6.2; fi
   - pip install -r tests/requirements.txt
-  - npm install -g phantomjs
+  - npm install -g phantomjs-prebuilt
 script:
   - make test
 after_success:
