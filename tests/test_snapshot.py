@@ -28,11 +28,19 @@ class TestMain():
         self.patcher1.stop()
         self.patcher.stop()
 
+    @raises(SystemExit)
     def test_no_params(self):
         args = ['snapshot']
         with patch.object(sys, 'argv', args):
             main()
 
+    @raises(SystemExit)
+    def test_help(self):
+        args = ['snapshot', 'help']
+        with patch.object(sys, 'argv', args):
+            main()
+
+    @raises(SystemExit)
     def test_no_phamtonjs(self):
         self.fake_call.side_effect = OSError
         args = ['snapshot', 'a', 'b']
@@ -176,7 +184,7 @@ def test_make_a_snapshot_real_pdf():
     assert (os.path.exists(test_output))  # exists just fine
 
 
-@raises(Exception)
+@raises(TypeError)
 def test_unsupported_file_type():
     # cannot produce a consistent binary matching file
     test_output = 'real.shady'
