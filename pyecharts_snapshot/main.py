@@ -39,8 +39,6 @@ def main():
             output = 'output.%s' % (file_type)
         elif file_type != 'png':
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
-        else:
-            show_help()
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
     else:
