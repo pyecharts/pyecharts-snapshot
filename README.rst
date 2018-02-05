@@ -134,6 +134,12 @@ Here is the snapshot in pdf:
    :width: 800px
 
 
+Coffee
+================================================================================
+
+Please buy [me a coffee](http://pyecharts.org/#/zh-cn/donate) if you think this library helped.
+
+
 Installation
 ================================================================================
 
