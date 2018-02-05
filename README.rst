@@ -137,7 +137,7 @@ Here is the snapshot in pdf:
 Coffee
 ================================================================================
 
-Please buy [me a coffee](http://pyecharts.org/#/zh-cn/donate) if you think this library helped.
+Please buy `me a coffee <http://pyecharts.org/#/zh-cn/donate>`_ if you think this library helped.
 
 
 Installation
