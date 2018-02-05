@@ -1,15 +1,15 @@
+# Template by setupmobans
 import os
 import sys
 import codecs
 from shutil import rmtree
 from setuptools import setup, find_packages, Command
-
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.1.2'
+VERSION = '0.1.3'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -18,7 +18,7 @@ ENTRY_POINTS = {
     ]
 }
 DESCRIPTION = (
-    'renders pyecharts output file as image'
+    'renders pyecharts output as image'
 )
 URL = 'https://github.com/pyecharts/pyecharts-snapshot'
 DOWNLOAD_URL = '%s/archive/0.1.2.tar.gz' % URL
@@ -52,6 +52,7 @@ INSTALL_REQUIRES = [
     'pillow',
 ]
 
+
 PACKAGES = find_packages(exclude=['ez_setup', 'examples', 'tests'])
 EXTRAS_REQUIRE = {
 }
@@ -63,7 +64,7 @@ GS_COMMAND = ('gs pyecharts-snapshot v0.1.2 ' +
 NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
                  'Please install gease to enable it.')
 UPLOAD_FAILED_MSG = (
-        'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
+    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 

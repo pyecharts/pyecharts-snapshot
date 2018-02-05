@@ -3,8 +3,8 @@ organisation: "pyecharts"
 author: "C.W."
 contact: "wangc_2011@hotmail.com"
 company: "Onni Software Ltd."
-version: "0.1.2"
-current_version: "0.1.2"
+version: "0.1.3"
+current_version: "0.1.3"
 release: "0.1.2"
 copyright_year: 2017
 command_line_interface: "snapshot"
@@ -20,4 +20,4 @@ keywords:
   - png
   - jpeg
   - pdf
-description: "renders pyecharts as image"
+description: "renders pyecharts output as image"

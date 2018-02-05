@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 DESCRIPTION = (
-    'renders pyecharts as image' +
+    'renders pyecharts output as image' +
     ''
 )
 extensions = [
@@ -17,7 +17,7 @@ master_doc = 'index'
 project = u'pyecharts-snapshot'
 copyright = u'2017 Onni Software Ltd.'
 version = '0.1.2'
-release = '0.1.2'
+release = '0.1.3'
 exclude_patterns = []
 pygments_style = 'sphinx'
 html_theme = 'default'
