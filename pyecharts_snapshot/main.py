@@ -1,4 +1,3 @@
-from __future__ import print_function
 import io
 import os
 import sys
@@ -15,20 +14,21 @@ else:
 PHANTOMJS_EXEC = "phantomjs"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 DEFAULT_DELAY = 1.5
+HELP_TEXT = """
+Usage:   snapshot input file [png|jpeg|gif|pdf] [delay in seconds]
+         snapshot help: display this help message
+         document online:github.com/pyecharts/pyecharts-snapshot
+"""
 
 
 def show_help():
-    print('Usage:   snapshot {input file} {output type:[png|jpeg|gif|pdf]} ',
-          end='')
-    print('{delay in seconds}\n', end='')
-    print('''         snapshot help: display this help message
-         document online:github.com/pyecharts/pyecharts-snapshot''')
+    print(HELP_TEXT)
     exit(0)
 
 
 def main():
     chk_phantomjs()
-    if len(sys.argv) <= 2:
+    if len(sys.argv) < 2 or len(sys.argv) > 4:
         show_help()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
@@ -70,7 +70,6 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     content_array = content.split(',')
-    print(content_array)
     if len(content_array) != 2:
         raise OSError(
             "No snapshot taken by phantomjs. "
@@ -116,7 +115,6 @@ def save_as(imagedata, output_name, file_type):
 
 def get_resource_dir(folder):
     current_path = os.path.dirname(__file__)
-    print(current_path)
     resource_path = os.path.join(current_path, folder)
     return resource_path
 

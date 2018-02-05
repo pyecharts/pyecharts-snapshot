@@ -1,7 +1,8 @@
 cd examples
+python demo.py
+mv demo.png ../images/demo.png
 python grid.py
 snapshot grid.html
-mv output.png ../images/demo.png
 python bar.py
 mv snapshot.png ../images/snapshot.png
 python pdf.py
