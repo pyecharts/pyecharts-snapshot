@@ -11,19 +11,31 @@ if PY2:
     from StringIO import StringIO as BytesIO
 else:
     from io import BytesIO
-PHANTOMJS_EXEC = "phantomjs"
-NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
-DEFAULT_DELAY = 1.5
+
 HELP_TEXT = """
 Usage:   snapshot input file [png|jpeg|gif|pdf] [delay in seconds]
          snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot
 """
 
+DEFAULT_DELAY = 1.5
+PNG_FORMAT = 'png'
+JPG_FORMAT = 'jpeg'
+GIF_FORMAT = 'gif'
+PDF_FORMAT = 'pdf'
 
-def show_help():
-    print(HELP_TEXT)
-    exit(0)
+PHANTOMJS_EXEC = "phantomjs"
+DEFAULT_OUTPUT_NAME = "output.%s"
+NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
+
+MESSAGE_GENERATING = 'Generating file ...'
+MESSAGE_PHANTOMJS_VERSION = "phantomjs version: %s"
+MESSAGE_FILE_SAVED_AS = 'File saved in %s/%s'
+MESSAGE_NO_SNAPSHOT = (
+    "No snapshot taken by phantomjs. "
+    "Please make sure it is installed and available on your PATH!"
+)
+MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 
 
 def main():
@@ -32,12 +44,12 @@ def main():
         show_help()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
-    output = 'output.png'
+    output = DEFAULT_OUTPUT_NAME % PNG_FORMAT
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
-        if file_type in ['pdf', 'jpeg', 'gif']:
-            output = 'output.%s' % (file_type)
-        elif file_type != 'png':
+        if file_type in [PDF_FORMAT, JPG_FORMAT, GIF_FORMAT]:
+            output = DEFAULT_OUTPUT_NAME % file_type
+        elif file_type != PNG_FORMAT:
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
@@ -46,8 +58,13 @@ def main():
     make_a_snapshot(file_name, output, delay=delay)
 
 
+def show_help():
+    print(HELP_TEXT)
+    exit(0)
+
+
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
-    print('Generating file ...')
+    print(MESSAGE_GENERATING)
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2
     shell_flag = False
@@ -73,14 +90,12 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     content_array = content.split(',')
     if len(content_array) != 2:
-        raise OSError(
-            "No snapshot taken by phantomjs. "
-            "Please make sure it is installed and available on your PATH!")
+        raise OSError(MESSAGE_NO_SNAPSHOT)
     base64_imagedata = content_array[1]
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
-    if file_type in ['pdf', 'gif']:
+    if file_type in [PDF_FORMAT, GIF_FORMAT]:
         save_as(imagedata, output_name, file_type)
-    elif file_type in ['png', 'jpeg']:
+    elif file_type in [PNG_FORMAT, JPG_FORMAT]:
         save_as_png(imagedata, output_name)
     else:
         raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
@@ -102,7 +117,7 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print('File rendered in ' + os.getcwd() + '/' + output_name)
+    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def save_as(imagedata, output_name, file_type):
@@ -112,7 +127,7 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-    print('File saved in %s/%s' % (os.getcwd(), output_name))
+    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def get_resource_dir(folder):
@@ -125,8 +140,8 @@ def chk_phantomjs():
     try:
         phantomjs_version = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
-            'utf8')
-        print("phantomjs version: %s" % phantomjs_version)
+            'utf-8')
+        print(MESSAGE_PHANTOMJS_VERSION % phantomjs_version)
     except Exception:
-        print("No phantomjs found in your PATH. Please install it!")
+        print(MESSAGE_NO_PHANTOMJS)
         sys.exit(1)
