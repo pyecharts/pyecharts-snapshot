@@ -1,6 +1,7 @@
 import io
 import os
 import sys
+import codecs
 import base64
 import subprocess
 from PIL import Image
@@ -23,6 +24,7 @@ PNG_FORMAT = 'png'
 JPG_FORMAT = 'jpeg'
 GIF_FORMAT = 'gif'
 PDF_FORMAT = 'pdf'
+SVG_FORMAT = 'svg'
 
 PHANTOMJS_EXEC = "phantomjs"
 DEFAULT_OUTPUT_NAME = "output.%s"
@@ -47,7 +49,7 @@ def main():
     output = DEFAULT_OUTPUT_NAME % PNG_FORMAT
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
-        if file_type in [PDF_FORMAT, JPG_FORMAT, GIF_FORMAT]:
+        if file_type in [PDF_FORMAT, JPG_FORMAT, GIF_FORMAT, SVG_FORMAT]:
             output = DEFAULT_OUTPUT_NAME % file_type
         elif file_type != PNG_FORMAT:
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
@@ -81,6 +83,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         str(__actual_delay_in_ms),
         str(pixel_ratio)
     ]
+    print(proc_params)
     proc = subprocess.Popen(
         proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:
@@ -88,6 +91,10 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         content = content.decode('utf-8')
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
+    if file_type == SVG_FORMAT:
+        save_as_svg(content, output_name)
+        return
+
     content_array = content.split(',')
     if len(content_array) != 2:
         raise OSError(MESSAGE_NO_SNAPSHOT)
@@ -95,7 +102,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     imagedata = decode_base64(base64_imagedata.encode('utf-8'))
     if file_type in [PDF_FORMAT, GIF_FORMAT]:
         save_as(imagedata, output_name, file_type)
-    elif file_type in [PNG_FORMAT, JPG_FORMAT]:
+    elif file_type in [PNG_FORMAT, JPG_FORMAT, SVG_FORMAT]:
         save_as_png(imagedata, output_name)
     else:
         raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
@@ -116,6 +123,12 @@ def decode_base64(data):
 
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
+        f.write(imagedata)
+    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
+
+
+def save_as_svg(imagedata, output_name):
+    with codecs.open(output_name, 'w', encoding='utf-8') as f:
         f.write(imagedata)
     print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 

@@ -13,10 +13,21 @@ var snapshot = "" +
 "        return mychart.getDataURL({type:'"+file_type+"', pixelRatio: " + pixel_ratio + ", excludeComponents: ['toolbox']});"+
 "    }";
 
+var snapshot_svg = "" +
+"    function () {" +
+"       var element = document.querySelector('div[_echarts_instance_] div');"+
+"       return element.innerHTML;"+
+"    }";
+
+
 page.open(file, function(){
-	window.setTimeout(function () {
-		var content = page.evaluateJavaScript(snapshot);
-		console.log(content);
-        phantom.exit();
-    }, delay);
+  window.setTimeout(function(){
+    if(file_type === 'svg'){
+      var content = page.evaluateJavaScript(snapshot_svg);
+    }else{
+      var content = page.evaluateJavaScript(snapshot);
+    }
+    console.log(content);
+    phantom.exit();
+  }, delay);
 });
