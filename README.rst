@@ -11,7 +11,7 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif image or
+pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif, svg image or
 a pdf file at command line or in your code.
 
 
@@ -45,6 +45,18 @@ And you will get:
 
 And here the code to `generate it <https://github.com/pyecharts/pyecharts-snapshot/blob/master/examples/grid.py>`_
 
+
+Get svg:
+
+.. code-block:: bash
+
+   $ snapshot render.html svg
+
+Please be aware that `render.html` should have configure echarts to do svg rendering. This library, being
+stupid, does not make canvas rendered image as svg rendered.
+
+.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/tests/fixtures/cang-zhou.svg
+   :width: 800px
 
 Usage details
 --------------------------------------------------------------------------------
