@@ -83,7 +83,6 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
         str(__actual_delay_in_ms),
         str(pixel_ratio)
     ]
-    print(proc_params)
     proc = subprocess.Popen(
         proc_params, stdout=subprocess.PIPE, shell=shell_flag)
     if PY2:

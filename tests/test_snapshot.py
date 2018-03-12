@@ -10,6 +10,7 @@ from pyecharts_snapshot.main import main, make_a_snapshot, PY2
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 HTML_FILE = os.path.join("tests", "fixtures", "render.html")
+SVG_HTML_FILE = os.path.join("tests", "fixtures", "render_svg_cangzhou.html")
 
 
 class CustomTestException(Exception):
@@ -176,6 +177,14 @@ def test_make_a_snapshot_real():
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
     assert (os.path.exists(test_output))  # exists just fine
+
+
+def test_svg_at_command_line():
+    args = [
+        'snapshot', SVG_HTML_FILE, 'svg']
+    with patch.object(sys, 'argv', args):
+        main()
+    assert (filecmp.cmp('output.svg', get_fixture('cang-zhou.svg')))
 
 
 def test_make_a_snapshot_real_pdf():
