@@ -53,10 +53,8 @@ Get svg:
    $ snapshot render.html svg
 
 Please be aware that `render.html` should have configure echarts to do svg rendering. This library, being
-stupid, does not make canvas rendered image as svg rendered.
+stupid, does not make canvas rendered image as svg rendered. Here is `an example svg file <https://github.com/pyecharts/pyecharts-snapshot/master/exampless/cang-zhou.svg>`_.
 
-.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/tests/fixtures/cang-zhou.svg
-   :width: 800px
 
 Usage details
 --------------------------------------------------------------------------------
