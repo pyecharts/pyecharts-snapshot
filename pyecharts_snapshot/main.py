@@ -98,7 +98,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
     if len(content_array) != 2:
         raise OSError(MESSAGE_NO_SNAPSHOT)
     base64_imagedata = content_array[1]
-    imagedata = decode_base64(base64_imagedata.encode('utf-8'))
+    imagedata = decode_base64(base64_imagedata)
     if file_type in [PDF_FORMAT, GIF_FORMAT]:
         save_as(imagedata, output_name, file_type)
     elif file_type in [PNG_FORMAT, JPG_FORMAT, SVG_FORMAT]:
