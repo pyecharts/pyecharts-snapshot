@@ -39,9 +39,11 @@ class SnapshotEnvironment(EchartsEnvironment):
                 **kwargs
             )
             make_a_snapshot('tmp.html', path, verbose=verbose)
+            content = None
             if extension == '.svg':
                 with codecs.open(path, 'r', 'utf-8') as f:
-                    return f.read()
+                    content = f.read()
             else:
                 with open(path, 'rb') as f:
-                    return f.read()
+                    content = f.read()
+            return content

@@ -127,7 +127,8 @@ class TestMain():
 
 
 @patch('subprocess.Popen')
-def test_make_png_snapshot(fake_popen):
+@patch('pyecharts_snapshot.main.chk_phantomjs')
+def test_make_png_snapshot(fake_check, fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
     test_output = 'custom.png'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
@@ -136,7 +137,8 @@ def test_make_png_snapshot(fake_popen):
 
 
 @patch('subprocess.Popen')
-def test_make_jpeg_snapshot(fake_popen):
+@patch('pyecharts_snapshot.main.chk_phantomjs')
+def test_make_jpeg_snapshot(fake_check, fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
     test_output = 'custom.jpeg'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
@@ -146,14 +148,16 @@ def test_make_jpeg_snapshot(fake_popen):
 
 @raises(Exception)
 @patch('subprocess.Popen')
-def test_phantomjs_fails(fake_popen):
+@patch('pyecharts_snapshot.main.chk_phantomjs')
+def test_phantomjs_fails(fake_check, fake_popen):
     fake_popen.return_value.stdout = BytesIO('abc')
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     'custom.jpeg')
 
 
 @patch('subprocess.Popen')
-def test_win32_shell_flag(fake_popen):
+@patch('pyecharts_snapshot.main.chk_phantomjs')
+def test_win32_shell_flag(fake_check, fake_popen):
     fake_popen.side_effect = CustomTestException("Enough. Stop testing")
     try:
         with patch.object(sys, 'platform', 'win32'):
@@ -164,7 +168,8 @@ def test_win32_shell_flag(fake_popen):
 
 
 @patch('subprocess.Popen')
-def test_win32_shell_flag_is_false(fake_popen):
+@patch('pyecharts_snapshot.main.chk_phantomjs')
+def test_win32_shell_flag_is_false(fake_check, fake_popen):
     fake_popen.side_effect = CustomTestException("Enough. Stop testing")
     try:
         make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
