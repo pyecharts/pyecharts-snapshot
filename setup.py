@@ -50,6 +50,7 @@ CLASSIFIERS = [
 
 INSTALL_REQUIRES = [
     'pillow',
+    'lml==0.0.2',
 ]
 SETUP_COMMANDS = {}
 

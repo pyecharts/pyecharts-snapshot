@@ -12,6 +12,7 @@ entry_point: "pyecharts_snapshot.main:main"
 license: MIT
 dependencies:
   - pillow
+  - lml==0.0.2
 keywords:
   - echarts
   - visualisation
