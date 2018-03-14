@@ -1,4 +1,4 @@
-from lml import PluginInfo, PluginInfoChain
+from lml.plugin import PluginInfo, PluginInfoChain
 
 
 PluginInfoChain(__name__).add_a_plugin_instance(

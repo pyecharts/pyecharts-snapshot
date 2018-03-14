@@ -4,6 +4,8 @@ import sys
 import codecs
 import base64
 import subprocess
+
+import pyecharts_snapshot.logger as logger
 from PIL import Image
 
 PY2 = sys.version_info[0] == 2
@@ -61,12 +63,14 @@ def main():
 
 
 def show_help():
-    print(HELP_TEXT)
+    logger.info(HELP_TEXT)
     exit(0)
 
 
-def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY):
-    print(MESSAGE_GENERATING)
+def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
+    logger.VERBOSE = verbose
+    chk_phantomjs()
+    logger.info(MESSAGE_GENERATING)
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2
     shell_flag = False
@@ -123,13 +127,13 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
+    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def save_as_svg(imagedata, output_name):
     with codecs.open(output_name, 'w', encoding='utf-8') as f:
         f.write(imagedata)
-    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
+    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def save_as(imagedata, output_name, file_type):
@@ -139,7 +143,7 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-    print(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
+    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def get_resource_dir(folder):
@@ -153,7 +157,7 @@ def chk_phantomjs():
         phantomjs_version = (
             subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
             'utf-8')
-        print(MESSAGE_PHANTOMJS_VERSION % phantomjs_version)
+        logger.info(MESSAGE_PHANTOMJS_VERSION % phantomjs_version)
     except Exception:
-        print(MESSAGE_NO_PHANTOMJS)
+        logger.warn(MESSAGE_NO_PHANTOMJS)
         sys.exit(1)
