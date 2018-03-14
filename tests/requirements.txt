@@ -3,3 +3,4 @@ mock
 codecov
 coverage
 flake8
+https://github.com/pyecharts/pyecharts/achive/pdf-export.tar.gz
