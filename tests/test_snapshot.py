@@ -131,7 +131,7 @@ class TestMain():
 def test_make_png_snapshot(fake_check, fake_popen):
     fake_popen.return_value.stdout = BytesIO(get_base64_image())
     test_output = 'custom.png'
-    make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
+    make_a_snapshot(get_fixture("render.html"),
                     test_output)
     assert (filecmp.cmp(test_output, get_fixture('sample.png')))
 
