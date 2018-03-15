@@ -1,8 +1,6 @@
 # coding=utf-8
 from __future__ import unicode_literals
 from pyecharts import Bar, Line, Scatter, EffectScatter, Grid
-from pyecharts_snapshot.main import make_a_snapshot
-
 
 attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
 v1 = [5, 20, 36, 10, 75, 90]
@@ -30,5 +28,4 @@ grid.add(bar, grid_bottom="60%", grid_left="60%")
 grid.add(line, grid_bottom="60%", grid_right="60%")
 grid.add(scatter, grid_top="60%", grid_left="60%")
 grid.add(es, grid_top="60%", grid_right="60%")
-grid.render(path='grid.html')
-make_a_snapshot('grid.html', 'grid.pdf', 3)
+grid.render(path='grid.pdf', delay=3)

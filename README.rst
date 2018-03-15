@@ -73,11 +73,7 @@ Programmatical usage is simple:
 .. code-block:: python
 
    ...
-   from pyecharts_snapshot.main import make_a_snapshot
-
-   ...
-   somechart.render()
-   make_a_snapshot('render.html', 'cool_snapshot.png')  # delay=1) for 1 second delay
+   somechart.render(path='cool_snapshot.png')  # delay=1) for 1 second delay
 
 where delay as an optional parameter can be given to specify `delay_in_seconds`.
 
@@ -91,7 +87,6 @@ Here's a fully working example code to get a png image:
    # coding=utf-8
    from __future__ import unicode_literals
    from pyecharts import Bar
-   from pyecharts_snapshot.main import make_a_snapshot
 
    attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
    v1 = [5, 20, 36, 10, 75, 90]
@@ -99,8 +94,7 @@ Here's a fully working example code to get a png image:
    bar = Bar("柱状图数据堆叠示例")
    bar.add("商家A", attr, v1, is_stack=True)
    bar.add("商家B", attr, v2, is_stack=True)
-   bar.render()
-   make_a_snapshot('render.html', 'snapshot.png')
+   bar.render(path='snapshot.png')
 
 
 Here is the snapshot:
@@ -115,8 +109,9 @@ In order to get a pdf file, you can do the following instead:
    # coding=utf-8
    from __future__ import unicode_literals
 
-   from pyecharts import Line, Pie, Grid
-   from pyecharts_snapshot.main import make_a_snapshot
+   from pyecharts import Line, Pie, Grid, configure
+
+   configure(output_image=True)
 
    line = Line("折线图示例", width=1200)
    attr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
@@ -133,8 +128,7 @@ In order to get a pdf file, you can do the following instead:
    grid = Grid()
    grid.add(line, grid_right="65%")
    grid.add(pie, grid_left="60%")
-   grid.render()
-   make_a_snapshot("render.html", 'snapshot.pdf')
+   grid.render(path='snapshot.pdf')
 
 
 Here is the snapshot in pdf:

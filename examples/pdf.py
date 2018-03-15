@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from pyecharts import Line, Pie, Grid
-from pyecharts_snapshot.main import make_a_snapshot
 
 line = Line("折线图示例", width=1200)
 attr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
@@ -19,5 +18,4 @@ pie.add("", attr, v1, radius=[30, 55],
 grid = Grid()
 grid.add(line, grid_right="65%")
 grid.add(pie, grid_left="60%")
-grid.render()
-make_a_snapshot('render.html', 'output.pdf')
+grid.render(path='output.pdf')
