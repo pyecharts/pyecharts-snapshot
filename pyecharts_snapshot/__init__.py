@@ -5,6 +5,6 @@ PluginInfoChain(__name__).add_a_plugin_instance(
     PluginInfo(
         'pyecharts_environment',
         '%s.jupyter.SnapshotEnvironment' % __name__,
-        tags=['snapshot']
+        tags=['png', 'svg', 'jpeg', 'gif', 'pdf']
     )
 )

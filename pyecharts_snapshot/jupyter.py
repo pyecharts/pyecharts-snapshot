@@ -3,7 +3,7 @@ import codecs
 
 from pyecharts.engine import EchartsEnvironment
 
-from pyecharts_snapshot.main import make_a_snapshot
+from pyecharts_snapshot.main import make_a_snapshot, DEFAULT_DELAY
 
 
 class SnapshotEnvironment(EchartsEnvironment):
@@ -17,33 +17,26 @@ class SnapshotEnvironment(EchartsEnvironment):
             self,
             chart,
             object_name='chart',
-            path='render.html',
+            path='render.png',
             template_name='simple_chart.html',
             verbose=True,
+            delay=DEFAULT_DELAY,
             **kwargs):
         _, extension = os.path.splitext(path)
-        if extension == '.html':
-            super(SnapshotEnvironment, self).render_chart_to_file(
-                chart=chart,
-                object_name=object_name,
-                path=path,
-                template_name=template_name,
-                **kwargs
-            )
+        super(SnapshotEnvironment, self).render_chart_to_file(
+            chart=chart,
+            object_name=object_name,
+            path='tmp.html',
+            template_name=template_name,
+            **kwargs
+        )
+        make_a_snapshot('tmp.html', path, delay=delay, verbose=verbose)
+        os.unlink('tmp.html')
+        content = None
+        if extension == '.svg':
+            with codecs.open(path, 'r', 'utf-8') as f:
+                content = f.read()
         else:
-            super(SnapshotEnvironment, self).render_chart_to_file(
-                chart=chart,
-                object_name=object_name,
-                path='tmp.html',
-                template_name=template_name,
-                **kwargs
-            )
-            make_a_snapshot('tmp.html', path, verbose=verbose)
-            content = None
-            if extension == '.svg':
-                with codecs.open(path, 'r', 'utf-8') as f:
-                    content = f.read()
-            else:
-                with open(path, 'rb') as f:
-                    content = f.read()
-            return content
+            with open(path, 'rb') as f:
+                content = f.read()
+        return content
