@@ -30,6 +30,15 @@ def test_snapshot_env():
 def test_render_chart_to_file():
     env = create_an_env()
     bar = create_a_bar('test')
-    content = env.render_chart_to_file(bar)
-    assert os.path.exists('render.png')
+    content = env.render_chart_to_file(bar, delay=0.5)
+    os.unlink('render.png')
     assert content is not None
+
+
+def test_render_chart_to_svg():
+    env = create_an_env()
+    bar = create_a_bar('test', renderer='svg')
+    content = env.render_chart_to_file(
+        bar, path='render.svg', delay=0.5)
+    os.unlink('render.svg')
+    assert 'svg' in content
