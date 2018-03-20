@@ -73,9 +73,6 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
     logger.info(MESSAGE_GENERATING)
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2
-    shell_flag = False
-    if sys.platform == 'win32':
-        shell_flag = True
     __actual_delay_in_ms = int(delay * 1000)
 
     # add shell=True and it works on Windows now.
@@ -88,7 +85,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
         str(pixel_ratio)
     ]
     proc = subprocess.Popen(
-        proc_params, stdout=subprocess.PIPE, shell=shell_flag)
+        proc_params, stdout=subprocess.PIPE, shell=get_shell_flag())
     if PY2:
         content = proc.stdout.read()
         content = content.decode('utf-8')
@@ -154,10 +151,14 @@ def get_resource_dir(folder):
 
 def chk_phantomjs():
     try:
-        phantomjs_version = (
-            subprocess.check_output([PHANTOMJS_EXEC, '--version'])).decode(
-            'utf-8')
+        phantomjs_version = subprocess.check_output(
+                [PHANTOMJS_EXEC, '--version'], shell=get_shell_flag())
+        phantomjs_version = phantomjs_version.decode('utf-8')
         logger.info(MESSAGE_PHANTOMJS_VERSION % phantomjs_version)
     except Exception:
         logger.warn(MESSAGE_NO_PHANTOMJS)
         sys.exit(1)
+
+
+def get_shell_flag():
+    return sys.platform == 'win32'
