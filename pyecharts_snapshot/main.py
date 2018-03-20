@@ -16,7 +16,7 @@ else:
     from io import BytesIO
 
 HELP_TEXT = """
-Usage:   snapshot input file [png|jpeg|gif|pdf] [delay in seconds]
+Usage:   snapshot input file [png|jpeg|gif|svg|pdf] [delay in seconds]
          snapshot help: display this help message
          document online:github.com/pyecharts/pyecharts-snapshot
 """
@@ -34,7 +34,7 @@ NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 
 MESSAGE_GENERATING = 'Generating file ...'
 MESSAGE_PHANTOMJS_VERSION = "phantomjs version: %s"
-MESSAGE_FILE_SAVED_AS = 'File saved in %s/%s'
+MESSAGE_FILE_SAVED_AS = 'File saved in %s'
 MESSAGE_NO_SNAPSHOT = (
     "No snapshot taken by phantomjs. "
     "Please make sure it is installed and available on your PATH!"
@@ -44,7 +44,7 @@ MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 
 def main():
     chk_phantomjs()
-    if len(sys.argv) < 2 or len(sys.argv) > 4:
+    if len(sys.argv) < 1 or len(sys.argv) > 4:
         show_help()
     file_name = sys.argv[1]
     delay = DEFAULT_DELAY
@@ -57,8 +57,6 @@ def main():
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
         if len(sys.argv) == 4:
             delay = float(sys.argv[3])  # in seconds
-    else:
-        show_help()
     make_a_snapshot(file_name, output, delay=delay)
 
 
@@ -93,19 +91,23 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
     if file_type == SVG_FORMAT:
         save_as_svg(content, output_name)
-        return
-
-    content_array = content.split(',')
-    if len(content_array) != 2:
-        raise OSError(MESSAGE_NO_SNAPSHOT)
-    base64_imagedata = content_array[1]
-    imagedata = decode_base64(base64_imagedata)
-    if file_type in [PDF_FORMAT, GIF_FORMAT]:
-        save_as(imagedata, output_name, file_type)
-    elif file_type in [PNG_FORMAT, JPG_FORMAT, SVG_FORMAT]:
-        save_as_png(imagedata, output_name)
     else:
-        raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
+       # pdf, gif, png, jpeg
+        content_array = content.split(',')
+        if len(content_array) != 2:
+            raise OSError(MESSAGE_NO_SNAPSHOT)
+        base64_imagedata = content_array[1]
+        imagedata = decode_base64(base64_imagedata)
+        if file_type in [PDF_FORMAT, GIF_FORMAT]:
+            save_as(imagedata, output_name, file_type)
+        elif file_type in [PNG_FORMAT, JPG_FORMAT]:
+            save_as_png(imagedata, output_name)
+        else:
+            raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
+    if '/' not in output_name:
+        output_name = os.path.join(os.getcwd(), output_name)
+
+    logger.info(MESSAGE_FILE_SAVED_AS % output_name)
 
 
 def decode_base64(data):
@@ -124,13 +126,11 @@ def decode_base64(data):
 def save_as_png(imagedata, output_name):
     with open(output_name, "wb") as f:
         f.write(imagedata)
-    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def save_as_svg(imagedata, output_name):
     with codecs.open(output_name, 'w', encoding='utf-8') as f:
         f.write(imagedata)
-    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def save_as(imagedata, output_name, file_type):
@@ -140,7 +140,6 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new('RGB', m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-    logger.info(MESSAGE_FILE_SAVED_AS % (os.getcwd(), output_name))
 
 
 def get_resource_dir(folder):
