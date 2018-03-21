@@ -43,10 +43,11 @@ MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 
 
 def main():
-    chk_phantomjs()
-    if len(sys.argv) < 1 or len(sys.argv) > 4:
+    if len(sys.argv) < 2 or len(sys.argv) > 4:
         show_help()
     file_name = sys.argv[1]
+    if file_name == 'help':
+        show_help()
     delay = DEFAULT_DELAY
     output = DEFAULT_OUTPUT_NAME % PNG_FORMAT
     if len(sys.argv) >= 3:
@@ -66,8 +67,8 @@ def show_help():
 
 
 def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
-    logger.VERBOSE = verbose
     chk_phantomjs()
+    logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2

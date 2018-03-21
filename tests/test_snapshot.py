@@ -44,19 +44,18 @@ class TestMain():
             main()
 
     @raises(SystemExit)
-    def test_no_phamtonjs(self):
+    def test_no_phantomjs(self):
         self.fake_call.side_effect = OSError
-        args = ['snapshot', 'a', 'b']
+        args = ['snapshot', 'a', 'png']
         with patch.object(sys, 'argv', args):
             main()
 
-    @raises(SystemExit)
     def test_main(self):
         self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
         args = ['snapshot', HTML_FILE]
         with patch.object(sys, 'argv', args):
             main()
-        # assert (filecmp.cmp('output.png', get_fixture('sample.png')))
+        assert (filecmp.cmp('output.png', get_fixture('sample.png')))
 
     def test_jpeg_at_command_line(self):
         self.fake_popen.return_value.stdout = BytesIO(get_base64_image())
