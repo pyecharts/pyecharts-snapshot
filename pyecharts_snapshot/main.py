@@ -92,7 +92,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
     if file_type == SVG_FORMAT:
         save_as_svg(content, output_name)
     else:
-       # pdf, gif, png, jpeg
+        # pdf, gif, png, jpeg
         content_array = content.split(',')
         if len(content_array) != 2:
             raise OSError(MESSAGE_NO_SNAPSHOT)

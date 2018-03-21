@@ -9,3 +9,6 @@ targets:
   - "tests/requirements.txt": "tests/custom_requirements.txt.jj2"
   - "docs/source/conf.py": "docs/source/conf.py.jj2"
   - test.sh: test.sh.jj2
+  - output: CHANGELOG.rst
+    configuration: changelog.yml
+    template: CHANGELOG.rst.jj2
