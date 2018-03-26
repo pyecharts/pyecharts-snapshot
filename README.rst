@@ -61,7 +61,7 @@ Usage details
 
 Command line options::
 
-   $ snapshot output.html [png|jpeg|gif|pdf] delay_in_seconds
+   $ snapshot output.html [png|jpeg|gif|svg|pdf] delay_in_seconds
 
 where `delay_in_seconds` tells pyexcel-snapshot to take a snapshot after
 delay_in_seconds. It is needed only when your snapshot is partial because the chart

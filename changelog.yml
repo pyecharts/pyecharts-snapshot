@@ -7,13 +7,13 @@ releases:
     - Tighter integration with pyecharts 0.4.2. SnapshotEnvironment extends the rendering capability of pyecharts
     - '`#16`: phantomjs check fails on windows'
     - '`#14`: if the output file name has a path, this library fails over'
-  date: unreleased
+  date: 26.03.2018
   version: 0.1.4
 - changes:
   - action: Added
     details:
     - svg support for pyecharts 0.4.0
-  date: 12.03.2017
+  date: 12.03.2018
   version: 0.1.3
 - changes:
   - action: Updated
