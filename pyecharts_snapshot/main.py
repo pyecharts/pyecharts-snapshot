@@ -84,7 +84,8 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
         str(pixel_ratio)
     ]
     proc = subprocess.Popen(
-        proc_params, stdout=subprocess.PIPE, shell=get_shell_flag())
+        proc_params, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE, shell=get_shell_flag())
     if PY2:
         content = proc.stdout.read()
         content = content.decode('utf-8')
@@ -96,7 +97,7 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
         # pdf, gif, png, jpeg
         content_array = content.split(',')
         if len(content_array) != 2:
-            raise OSError(MESSAGE_NO_SNAPSHOT)
+            raise OSError(content_array)
         base64_imagedata = content_array[1]
         imagedata = decode_base64(base64_imagedata)
         if file_type in [PDF_FORMAT, GIF_FORMAT]:
