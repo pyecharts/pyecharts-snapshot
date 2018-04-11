@@ -2,6 +2,12 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Updated
+    details:
+    - better error verbose when phantomjs fails to generate output
+  date: 11.04.2018
+  version: 0.1.5
+- changes:
   - action: Added
     details:
     - Tighter integration with pyecharts 0.4.2. SnapshotEnvironment extends the rendering capability of pyecharts
