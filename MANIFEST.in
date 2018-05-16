@@ -1,3 +1,4 @@
 include README.rst
 include CHANGELOG.rst
+include CONTRIBUTORS.rst
 include pyecharts_snapshot/phantomjs/*.js

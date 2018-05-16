@@ -71,12 +71,7 @@ class TestMain():
             'snapshot', HTML_FILE, 'pdf']
         with patch.object(sys, 'argv', args):
             main()
-        if PY27:
-            # do binary comaprision
-            assert (filecmp.cmp('output.pdf', get_fixture('sample.pdf')))
-        else:
-            # otherwise test the file is produced
-            assert (os.path.exists('output.pdf'))
+        assert (os.path.exists('output.pdf'))
 
     def test_delay_option(self):
         self.fake_popen.side_effect = Exception("Enough test. Abort")

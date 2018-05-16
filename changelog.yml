@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Updated
     details:
+    - use system temp file instead of current working folder for tmp files
+  date: 16.05.2018
+  version: 0.1.6
+- changes:
+  - action: Updated
+    details:
     - better error verbose when phantomjs fails to generate output
   date: 11.04.2018
   version: 0.1.5
