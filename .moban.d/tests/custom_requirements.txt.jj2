@@ -1,4 +1,4 @@
 {% extends "tests/requirements.txt.jj2" %}
 {%block extras %}
-https://github.com/pyecharts/pyecharts/archive/dev.tar.gz
+pyecharts
 {%endblock%}
