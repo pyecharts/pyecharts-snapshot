@@ -1,4 +1,6 @@
-# Template by setupmobans
+#!/usr/bin/env python3
+
+# Template by pypi-mobans
 import os
 import sys
 import codecs
@@ -20,8 +22,8 @@ ENTRY_POINTS = {
 DESCRIPTION = (
     'renders pyecharts output as image'
 )
-URL = 'https://github.com/pyecharts/pyecharts-snapshot'
-DOWNLOAD_URL = '%s/archive/0.1.5.tar.gz' % URL
+URL = 'https:///pyecharts/pyecharts-snapshot'
+DOWNLOAD_URL = '%s/archive/0.1.6.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
@@ -36,8 +38,6 @@ KEYWORDS = [
 ]
 
 CLASSIFIERS = [
-    'Topic :: Office/Business',
-    'Topic :: Utilities',
     'Topic :: Software Development :: Libraries',
     'Programming Language :: Python',
     'Intended Audience :: Developers',
@@ -62,8 +62,8 @@ EXTRAS_REQUIRE = {
 # You do not need to read beyond this line
 PUBLISH_COMMAND = '{0} setup.py sdist bdist_wheel upload -r pypi'.format(
     sys.executable)
-GS_COMMAND = ('gs pyecharts-snapshot v0.1.5 ' +
-              "Find 0.1.5 in changelog for more details")
+GS_COMMAND = ('gs pyecharts-snapshot v0.1.6 ' +
+              "Find 0.1.6 in changelog for more details")
 NO_GS_MESSAGE = ('Automatic github release is disabled. ' +
                  'Please install gease to enable it.')
 UPLOAD_FAILED_MSG = (
@@ -139,7 +139,8 @@ def read_files(*files):
 
 def read(afile):
     """Read a file into setup"""
-    with codecs.open(afile, 'r', 'utf-8') as opened_file:
+    the_relative_file = os.path.join(HERE, afile)
+    with codecs.open(the_relative_file, 'r', 'utf-8') as opened_file:
         content = filter_out_test_code(opened_file)
         content = "".join(list(content))
         return content
