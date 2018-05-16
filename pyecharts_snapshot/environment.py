@@ -24,7 +24,7 @@ class SnapshotEnvironment(EchartsEnvironment):
             delay=DEFAULT_DELAY,
             **kwargs):
         _, extension = os.path.splitext(path)
-        tmp_file_handle, tmp_file_path = mkstemp()
+        tmp_file_handle, tmp_file_path = mkstemp(suffix='.html')
         super(SnapshotEnvironment, self).render_chart_to_file(
             chart=chart,
             object_name=object_name,
