@@ -22,7 +22,9 @@ ENTRY_POINTS = {
 DESCRIPTION = (
     'renders pyecharts output as image'
 )
-URL = 'https:///pyecharts/pyecharts-snapshot'
+
+URL = 'https://github.com/pyecharts/pyecharts-snapshot'
+
 DOWNLOAD_URL = '%s/archive/0.1.6.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
