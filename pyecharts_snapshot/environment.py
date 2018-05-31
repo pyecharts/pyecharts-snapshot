@@ -8,6 +8,7 @@ from pyecharts_snapshot.main import make_a_snapshot, DEFAULT_DELAY
 
 
 class SnapshotEnvironment(EchartsEnvironment):
+
     def render_chart_to_notebook(self, **_):
         """
         Disable html rendering (_repr_html_) in jupyter.
@@ -15,16 +16,17 @@ class SnapshotEnvironment(EchartsEnvironment):
         return None
 
     def render_chart_to_file(
-            self,
-            chart,
-            object_name='chart',
-            path='render.png',
-            template_name='simple_chart.html',
-            verbose=True,
-            delay=DEFAULT_DELAY,
-            **kwargs):
+        self,
+        chart,
+        object_name="chart",
+        path="render.png",
+        template_name="simple_chart.html",
+        verbose=True,
+        delay=DEFAULT_DELAY,
+        **kwargs
+    ):
         _, extension = os.path.splitext(path)
-        tmp_file_handle, tmp_file_path = mkstemp(suffix='.html')
+        tmp_file_handle, tmp_file_path = mkstemp(suffix=".html")
         super(SnapshotEnvironment, self).render_chart_to_file(
             chart=chart,
             object_name=object_name,
@@ -35,10 +37,10 @@ class SnapshotEnvironment(EchartsEnvironment):
         make_a_snapshot(tmp_file_path, path, delay=delay, verbose=verbose)
         os.close(tmp_file_handle)
         content = None
-        if extension == '.svg':
-            with codecs.open(path, 'r', 'utf-8') as f:
+        if extension == ".svg":
+            with codecs.open(path, "r", "utf-8") as f:
                 content = f.read()
         else:
-            with open(path, 'rb') as f:
+            with open(path, "rb") as f:
                 content = f.read()
         return content
