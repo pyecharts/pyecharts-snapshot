@@ -8,7 +8,7 @@ from nose.tools import raises, eq_
 from platform import python_implementation
 
 from pyecharts_snapshot.main import main, make_a_snapshot, PY2
-from pyecharts_snapshot.main import save_as_svg
+from pyecharts_snapshot.main import save_as_svg, to_file_uri
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 HTML_FILE = os.path.join("tests", "fixtures", "render.html")
@@ -96,7 +96,8 @@ class TestMain():
                 main()
         except Exception:
             print(self.fake_popen.call_args)
-            eq_(self.fake_popen.call_args[0][0][2],
+            assert self.fake_popen.call_args[0][0][2].startswith('file:////')
+            assert self.fake_popen.call_args[0][0][2].endswith(
                 'tests/fixtures/render.html')
 
     def test_default_delay_value(self):
@@ -211,6 +212,16 @@ def test_unsupported_file_type():
     test_output = 'real.shady'
     make_a_snapshot(os.path.join("tests", "fixtures", "render.html"),
                     test_output)
+
+
+def test_to_file_uri():
+    windows_file = 'C:\\user\\tmp.html'
+    uri = to_file_uri(windows_file)
+    eq_(uri, 'file:///C:/user/tmp.html')
+    linux_file = 'tests/fixtures/tmp.html'
+    uri2 = to_file_uri(linux_file)
+    assert uri2.startswith('file:////')
+    assert uri2.endswith(linux_file)
 
 
 def get_base64_image():

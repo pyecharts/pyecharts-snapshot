@@ -73,12 +73,11 @@ def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
     file_type = output_name.split('.')[-1]
     pixel_ratio = 2
     __actual_delay_in_ms = int(delay * 1000)
-
     # add shell=True and it works on Windows now.
     proc_params = [
         PHANTOMJS_EXEC,
         os.path.join(get_resource_dir('phantomjs'), 'snapshot.js'),
-        file_name.replace('\\', '/'),
+        to_file_uri(file_name),
         file_type,
         str(__actual_delay_in_ms),
         str(pixel_ratio)
@@ -163,3 +162,10 @@ def chk_phantomjs():
 
 def get_shell_flag():
     return sys.platform == 'win32'
+
+
+def to_file_uri(a_file_name):
+    __universal_file_name = a_file_name.replace('\\', '/')
+    if ':' not in a_file_name:
+        __universal_file_name = os.path.abspath(__universal_file_name)
+    return 'file:///{0}'.format(__universal_file_name)
