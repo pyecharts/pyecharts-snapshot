@@ -3,6 +3,8 @@ configuration:
   - "setupmobans/templates"
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
+  plugin_dir:
+  - "setupmobans/plugins"
 targets:
   - setup.py: setup.py
   - requirements.txt: requirements.txt.jj2

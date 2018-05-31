@@ -2,6 +2,12 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Fixed
+    details:
+    - '`#23`: phantomjs on windows does not like absolute path but file uri formatted ones'
+  date: 31.05.2018
+  version: 0.1.7
+- changes:
   - action: Updated
     details:
     - use system temp file instead of current working folder for tmp files
