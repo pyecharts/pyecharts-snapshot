@@ -16,12 +16,16 @@ else:
     from io import BytesIO
 
 HELP_TEXT = """
-Usage:   snapshot input file [png|jpeg|gif|svg|pdf] [delay in seconds]
+Usage:   snapshot input file [png|jpeg|gif|svg|pdf] [delay] [pixel ratio]
          snapshot help: display this help message
+Parameters:
+         delay: float value, unit in seconds and defaults 1.5 seconds
+         pixel ratio: integer value, defaults to 2
          document online:github.com/pyecharts/pyecharts-snapshot
 """
 
 DEFAULT_DELAY = 1.5
+DEFAULT_PIXEL_RATIO = 2
 PNG_FORMAT = "png"
 JPG_FORMAT = "jpeg"
 GIF_FORMAT = "gif"
@@ -43,22 +47,25 @@ MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 
 
 def main():
-    if len(sys.argv) < 2 or len(sys.argv) > 4:
+    if len(sys.argv) < 2 or len(sys.argv) > 5:
         show_help()
     file_name = sys.argv[1]
     if file_name == "help":
         show_help()
     delay = DEFAULT_DELAY
     output = DEFAULT_OUTPUT_NAME % PNG_FORMAT
+    pixel_ratio = DEFAULT_PIXEL_RATIO
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
         if file_type in [PDF_FORMAT, JPG_FORMAT, GIF_FORMAT, SVG_FORMAT]:
             output = DEFAULT_OUTPUT_NAME % file_type
         elif file_type != PNG_FORMAT:
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
-        if len(sys.argv) == 4:
+        if len(sys.argv) >= 4:
             delay = float(sys.argv[3])  # in seconds
-    make_a_snapshot(file_name, output, delay=delay)
+            if len(sys.argv) == 5:
+                pixel_ratio = sys.argv[4]
+    make_a_snapshot(file_name, output, delay=delay, pixel_ratio=pixel_ratio)
 
 
 def show_help():
@@ -66,12 +73,12 @@ def show_help():
     exit(0)
 
 
-def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY, verbose=True):
+def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY,
+                    pixel_ratio=2, verbose=True):
     chk_phantomjs()
     logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)
     file_type = output_name.split(".")[-1]
-    pixel_ratio = 2
     __actual_delay_in_ms = int(delay * 1000)
     # add shell=True and it works on Windows now.
     proc_params = [

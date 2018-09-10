@@ -79,8 +79,18 @@ class TestMain():
             with patch.object(sys, "argv", args):
                 main()
         except Exception:
-            print(self.fake_popen.call_args)
             eq_(self.fake_popen.call_args[0][0][4], "100")
+
+    def test_pixcel_option(self):
+        self.fake_popen.side_effect = Exception("Enough test. Abort")
+        pixel_ratio = 5
+        args = ["snapshot", HTML_FILE, "jpeg", "0.1", str(pixel_ratio)]
+        try:
+            with patch.object(sys, "argv", args):
+                main()
+        except Exception:
+            print(self.fake_popen.call_args)
+            eq_(self.fake_popen.call_args[0][0][5], str(pixel_ratio))
 
     def test_windows_file_name(self):
         self.fake_popen.side_effect = Exception("Enough test. Abort")

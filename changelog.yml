@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Fixed
     details:
+    - '`#28`: pixel_ratio as a parameter'
+  date: 10.09.2018
+  version: 0.1.8
+- changes:
+  - action: Fixed
+    details:
     - '`#23`: phantomjs on windows does not like absolute path but file uri formatted ones'
   date: 31.05.2018
   version: 0.1.7

@@ -11,7 +11,7 @@ PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.1.7'
+VERSION = '0.1.8'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -22,10 +22,8 @@ ENTRY_POINTS = {
 DESCRIPTION = (
     'renders pyecharts output as image'
 )
-
 URL = 'https://github.com/pyecharts/pyecharts-snapshot'
 DOWNLOAD_URL = '%s/archive/0.1.7.tar.gz' % URL
-
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
     'echarts',
@@ -36,7 +34,7 @@ KEYWORDS = [
     'jpeg',
     'svg',
     'pdf',
-    'python'
+    'python',
 ]
 
 CLASSIFIERS = [
