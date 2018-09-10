@@ -8,7 +8,6 @@ from pyecharts_snapshot.main import make_a_snapshot, DEFAULT_DELAY
 
 
 class SnapshotEnvironment(EchartsEnvironment):
-
     def render_chart_to_notebook(self, **_):
         """
         Disable html rendering (_repr_html_) in jupyter.

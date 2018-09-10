@@ -73,8 +73,9 @@ def show_help():
     exit(0)
 
 
-def make_a_snapshot(file_name, output_name, delay=DEFAULT_DELAY,
-                    pixel_ratio=2, verbose=True):
+def make_a_snapshot(
+    file_name, output_name, delay=DEFAULT_DELAY, pixel_ratio=2, verbose=True
+):
     chk_phantomjs()
     logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)

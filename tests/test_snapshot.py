@@ -19,8 +19,7 @@ class CustomTestException(Exception):
     pass
 
 
-class TestMain():
-
+class TestMain:
     def setUp(self):
         self.patcher = patch("subprocess.Popen")
         self.fake_popen = self.patcher.start()
