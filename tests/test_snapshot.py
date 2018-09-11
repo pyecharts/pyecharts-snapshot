@@ -230,16 +230,6 @@ def test_to_file_uri():
     assert uri2.endswith(linux_file)
 
 
-def test_to_file_uri():
-    windows_file = 'C:\\user\\tmp.html'
-    uri = to_file_uri(windows_file)
-    eq_(uri, 'file:///C:/user/tmp.html')
-    linux_file = 'tests/fixtures/tmp.html'
-    uri2 = to_file_uri(linux_file)
-    assert uri2.startswith('file:////')
-    assert uri2.endswith(linux_file)
-
-
 def get_base64_image():
     with open(get_fixture("base64.txt"), "r") as f:
         content = f.read().replace("\r\n", "")
