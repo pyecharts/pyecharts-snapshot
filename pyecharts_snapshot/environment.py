@@ -4,11 +4,14 @@ from tempfile import mkstemp
 
 from pyecharts.engine import EchartsEnvironment
 
-from pyecharts_snapshot.main import make_a_snapshot, DEFAULT_DELAY
+from pyecharts_snapshot.main import (
+    make_a_snapshot,
+    DEFAULT_DELAY,
+    DEFAULT_PIXEL_RATIO,
+)
 
 
 class SnapshotEnvironment(EchartsEnvironment):
-
     def render_chart_to_notebook(self, **_):
         """
         Disable html rendering (_repr_html_) in jupyter.
@@ -23,6 +26,7 @@ class SnapshotEnvironment(EchartsEnvironment):
         template_name="simple_chart.html",
         verbose=True,
         delay=DEFAULT_DELAY,
+        pixel_ratio=DEFAULT_PIXEL_RATIO,
         **kwargs
     ):
         _, extension = os.path.splitext(path)
@@ -34,7 +38,13 @@ class SnapshotEnvironment(EchartsEnvironment):
             template_name=template_name,
             **kwargs
         )
-        make_a_snapshot(tmp_file_path, path, delay=delay, verbose=verbose)
+        make_a_snapshot(
+            tmp_file_path,
+            path,
+            delay=delay,
+            pixel_ratio=pixel_ratio,
+            verbose=verbose,
+        )
         os.close(tmp_file_handle)
         content = None
         if extension == ".svg":
