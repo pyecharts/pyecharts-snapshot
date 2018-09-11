@@ -3,13 +3,10 @@ configuration:
   - "setupmobans/templates"
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
-  plugin_dir:
-  - "setupmobans/plugins"
 targets:
   - setup.py: setup.py
   - requirements.txt: requirements.txt.jj2
   - "tests/requirements.txt": "tests/custom_requirements.txt.jj2"
-  - "docs/source/conf.py": "docs/source/conf.py.jj2"
   - test.sh: test.sh.jj2
   - output: CHANGELOG.rst
     configuration: changelog.yml

@@ -61,11 +61,15 @@ Usage details
 
 Command line options::
 
-   $ snapshot output.html [png|jpeg|gif|svg|pdf] delay_in_seconds
+   $ snapshot output.html [png|jpeg|gif|svg|pdf] [delay] [pixel ratio]
 
-where `delay_in_seconds` tells pyexcel-snapshot to take a snapshot after
-delay_in_seconds. It is needed only when your snapshot is partial because the chart
-animation takes long than 0.5 second(default).
+where:
+
+`delay` tells pyecharts-snapshot to take a snapshot after
+some time measured in seconds. It is needed only when your snapshot is partial because the chart
+animation takes long than 1.5 second(default).
+`pixel ratio` tells pyecharts-snapshot to use a different pixel ratio when generate
+the image. It defaults to 2.
 
 
 Programmatical usage is simple:
@@ -73,7 +77,7 @@ Programmatical usage is simple:
 .. code-block:: python
 
    ...
-   somechart.render(path='cool_snapshot.png')  # delay=1) for 1 second delay
+   somechart.render(path='cool_snapshot.png')  # delay=1, pixel_ratio=3) 1 second delay, 3 as pixel ratio
 
 where delay as an optional parameter can be given to specify `delay_in_seconds`.
 
@@ -94,7 +98,7 @@ Here's a fully working example code to get a png image:
    bar = Bar("柱状图数据堆叠示例")
    bar.add("商家A", attr, v1, is_stack=True)
    bar.add("商家B", attr, v2, is_stack=True)
-   bar.render(path='snapshot.png')
+   bar.render(path='snapshot.png', pixel_ratio=3)
 
 
 Here is the snapshot:
@@ -128,7 +132,7 @@ In order to get a pdf file, you can do the following instead:
    grid = Grid()
    grid.add(line, grid_right="65%")
    grid.add(pie, grid_left="60%")
-   grid.render(path='snapshot.pdf')
+   grid.render(path='grid.pdf', delay=3)
 
 
 Here is the snapshot in pdf:
