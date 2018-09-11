@@ -74,7 +74,11 @@ def show_help():
 
 
 def make_a_snapshot(
-    file_name, output_name, delay=DEFAULT_DELAY, pixel_ratio=2, verbose=True
+    file_name,
+    output_name,
+    delay=DEFAULT_DELAY,
+    pixel_ratio=DEFAULT_PIXEL_RATIO,
+    verbose=True,
 ):
     chk_phantomjs()
     logger.VERBOSE = verbose
