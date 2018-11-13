@@ -1,4 +1,5 @@
 import os
+
 from pyecharts import Bar
 from pyecharts_snapshot.environment import SnapshotEnvironment
 

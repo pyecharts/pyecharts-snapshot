@@ -1,11 +1,12 @@
 import io
 import os
 import sys
-import codecs
 import base64
+import codecs
 import subprocess
 
 import pyecharts_snapshot.logger as logger
+
 from PIL import Image
 
 PY2 = sys.version_info[0] == 2

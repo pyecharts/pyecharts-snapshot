@@ -1,6 +1,10 @@
+requires:
+  - type: git
+    url: https://github.com/moremoban/pypi-mobans
+    submodule: true
 configuration:
   template_dir:
-  - "setupmobans/templates"
+  - "pypi-mobans:templates"
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
 targets:
