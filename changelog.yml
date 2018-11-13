@@ -5,7 +5,7 @@ releases:
   - action: Updated
     details:
     - 'Loosen the requirement on lml'
-  date: unreleased
+  date: 13.11.2018
   version: 0.1.9
 - changes:
   - action: Fixed
