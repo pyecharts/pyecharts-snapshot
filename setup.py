@@ -5,13 +5,15 @@ import os
 import sys
 import codecs
 from shutil import rmtree
-from setuptools import setup, find_packages, Command
+
+from setuptools import Command, setup, find_packages
+
 PY2 = sys.version_info[0] == 2
 PY26 = PY2 and sys.version_info[1] < 7
 
 NAME = 'pyecharts-snapshot'
 AUTHOR = 'C.W.'
-VERSION = '0.1.8'
+VERSION = '0.1.9'
 EMAIL = 'wangc_2011@hotmail.com'
 LICENSE = 'MIT'
 ENTRY_POINTS = {
@@ -26,6 +28,7 @@ URL = 'https://github.com/pyecharts/pyecharts-snapshot'
 DOWNLOAD_URL = '%s/archive/0.1.8.tar.gz' % URL
 FILES = ['README.rst', 'CONTRIBUTORS.rst', 'CHANGELOG.rst']
 KEYWORDS = [
+    'python',
     'echarts',
     'visualisation',
     'data',
@@ -34,7 +37,6 @@ KEYWORDS = [
     'jpeg',
     'svg',
     'pdf',
-    'python',
 ]
 
 CLASSIFIERS = [
@@ -51,7 +53,7 @@ CLASSIFIERS = [
 
 INSTALL_REQUIRES = [
     'pillow',
-    'lml==0.0.2',
+    'lml>=0.0.2',
 ]
 SETUP_COMMANDS = {}
 

@@ -2,6 +2,12 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Updated
+    details:
+    - 'Loosen the requirement on lml'
+  date: unreleased
+  version: 0.1.9
+- changes:
   - action: Fixed
     details:
     - '`#28`: pixel_ratio as a parameter'
