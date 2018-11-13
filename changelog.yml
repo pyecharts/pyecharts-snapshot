@@ -2,6 +2,9 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Added
+    details:
+    - 'Support eps'
   - action: Updated
     details:
     - 'Loosen the requirement on lml'

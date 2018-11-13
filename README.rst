@@ -11,8 +11,8 @@ pyecharts-snapshot
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif, svg image or
-a pdf file at command line or in your code.
+pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif, eps, svg
+image or a pdf file at command line or in your code.
 
 
 Please be aware of its dependency on **phantom.js**.

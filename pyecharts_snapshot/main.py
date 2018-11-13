@@ -17,7 +17,7 @@ else:
     from io import BytesIO
 
 HELP_TEXT = """
-Usage:   snapshot input file [png|jpeg|gif|svg|pdf] [delay] [pixel ratio]
+Usage:   snapshot input file [png|jpeg|gif|svg|pdf|eps] [delay] [pixel ratio]
          snapshot help: display this help message
 Parameters:
          delay: float value, unit in seconds and defaults 1.5 seconds
@@ -32,6 +32,10 @@ JPG_FORMAT = "jpeg"
 GIF_FORMAT = "gif"
 PDF_FORMAT = "pdf"
 SVG_FORMAT = "svg"
+EPS_FORMAT = "eps"
+
+SUPPORTED_IMAGE_FORMATS = [
+    PDF_FORMAT, JPG_FORMAT, GIF_FORMAT, SVG_FORMAT, EPS_FORMAT]
 
 PHANTOMJS_EXEC = "phantomjs"
 DEFAULT_OUTPUT_NAME = "output.%s"
@@ -58,7 +62,7 @@ def main():
     pixel_ratio = DEFAULT_PIXEL_RATIO
     if len(sys.argv) >= 3:
         file_type = sys.argv[2]
-        if file_type in [PDF_FORMAT, JPG_FORMAT, GIF_FORMAT, SVG_FORMAT]:
+        if file_type in SUPPORTED_IMAGE_FORMATS:
             output = DEFAULT_OUTPUT_NAME % file_type
         elif file_type != PNG_FORMAT:
             raise TypeError(NOT_SUPPORTED_FILE_TYPE % file_type)
@@ -115,7 +119,7 @@ def make_a_snapshot(
             raise OSError(content_array)
         base64_imagedata = content_array[1]
         imagedata = decode_base64(base64_imagedata)
-        if file_type in [PDF_FORMAT, GIF_FORMAT]:
+        if file_type in [PDF_FORMAT, GIF_FORMAT, EPS_FORMAT]:
             save_as(imagedata, output_name, file_type)
         elif file_type in [PNG_FORMAT, JPG_FORMAT]:
             save_as_png(imagedata, output_name)
