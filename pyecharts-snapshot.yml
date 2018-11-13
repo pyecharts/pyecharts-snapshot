@@ -3,9 +3,9 @@ organisation: "pyecharts"
 author: "C.W."
 contact: "wangc_2011@hotmail.com"
 company: "Onni Software Ltd."
-version: "0.1.8"
-current_version: "0.1.8"
-release: "0.1.8"
+version: "0.1.9"
+current_version: "0.1.9"
+release: "0.1.9"
 copyright_year: 2017-2018
 command_line_interface: "snapshot"
 entry_point: "pyecharts_snapshot.main:main"
@@ -13,7 +13,7 @@ nodocs: true
 license: MIT
 dependencies:
   - pillow
-  - lml==0.0.2
+  - lml>=0.0.2
 keywords:
   - echarts
   - visualisation

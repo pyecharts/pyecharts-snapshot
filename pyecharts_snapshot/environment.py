@@ -3,11 +3,10 @@ import codecs
 from tempfile import mkstemp
 
 from pyecharts.engine import EchartsEnvironment
-
 from pyecharts_snapshot.main import (
-    make_a_snapshot,
     DEFAULT_DELAY,
     DEFAULT_PIXEL_RATIO,
+    make_a_snapshot,
 )
 
 

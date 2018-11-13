@@ -2,6 +2,15 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Added
+    details:
+    - 'Support eps'
+  - action: Updated
+    details:
+    - 'Loosen the requirement on lml'
+  date: 13.11.2018
+  version: 0.1.9
+- changes:
   - action: Fixed
     details:
     - '`#28`: pixel_ratio as a parameter'

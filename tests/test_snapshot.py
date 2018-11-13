@@ -3,12 +3,18 @@ import sys
 import codecs
 import filecmp
 from io import BytesIO
-from mock import patch
-from nose.tools import raises, eq_
 from platform import python_implementation
 
-from pyecharts_snapshot.main import main, make_a_snapshot, PY2
-from pyecharts_snapshot.main import save_as_svg, to_file_uri
+from pyecharts_snapshot.main import (
+    PY2,
+    main,
+    save_as_svg,
+    to_file_uri,
+    make_a_snapshot,
+)
+
+from mock import patch
+from nose.tools import eq_, raises
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 HTML_FILE = os.path.join("tests", "fixtures", "render.html")

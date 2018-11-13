@@ -1,6 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
-from pyecharts import Bar, Line, Scatter, EffectScatter, Grid
+
+from pyecharts import Bar, Grid, Line, Scatter, EffectScatter
 
 attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
 v1 = [5, 20, 36, 10, 75, 90]

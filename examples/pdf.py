@@ -1,7 +1,7 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
-from pyecharts import Line, Pie, Grid
+from pyecharts import Pie, Grid, Line
 
 line = Line("折线图示例", width=1200)
 attr = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
