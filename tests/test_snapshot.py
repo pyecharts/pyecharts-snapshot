@@ -5,16 +5,15 @@ import filecmp
 from io import BytesIO
 from platform import python_implementation
 
+from mock import patch
+from nose.tools import eq_, raises
 from pyecharts_snapshot.main import (
     PY2,
     main,
-    save_as_svg,
     to_file_uri,
+    save_as_text,
     make_a_snapshot,
 )
-
-from mock import patch
-from nose.tools import eq_, raises
 
 PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 HTML_FILE = os.path.join("tests", "fixtures", "render.html")
@@ -202,7 +201,7 @@ def test_svg_at_command_line():
 def test_save_svg():
     test_data = "<svg></svg>"
     outfile = "great.svg"
-    save_as_svg(test_data, outfile)
+    save_as_text(test_data, outfile)
     with codecs.open(outfile) as f:
         content = f.read()
         eq_(test_data, content)

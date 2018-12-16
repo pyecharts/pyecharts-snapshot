@@ -1,9 +1,9 @@
 import os
 
 from pyecharts import Bar
-from pyecharts_snapshot.environment import SnapshotEnvironment
 
 from jinja2 import FileSystemLoader
+from pyecharts_snapshot.environment import SnapshotEnvironment
 
 
 def create_an_env():

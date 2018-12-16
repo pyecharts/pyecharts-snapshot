@@ -4,6 +4,12 @@ releases:
 - changes:
   - action: Added
     details:
+    - '`#33`: Support base64 encoding'
+  date: 16.12.2018
+  version: 0.1.10
+- changes:
+  - action: Added
+    details:
     - 'Support eps'
   - action: Updated
     details:
