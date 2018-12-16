@@ -45,7 +45,6 @@ Parameters:
 """.format(
     "|".join(SUPPORTED_IMAGE_FORMATS)
 )
-
 PHANTOMJS_EXEC = "phantomjs"
 DEFAULT_OUTPUT_NAME = "output.%s"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
