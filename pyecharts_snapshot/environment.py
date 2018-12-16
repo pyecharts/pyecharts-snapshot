@@ -3,6 +3,7 @@ import codecs
 from tempfile import mkstemp
 
 from pyecharts.engine import EchartsEnvironment
+
 from pyecharts_snapshot.main import (
     DEFAULT_DELAY,
     DEFAULT_PIXEL_RATIO,

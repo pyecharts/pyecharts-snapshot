@@ -6,7 +6,6 @@ import codecs
 import subprocess
 
 import pyecharts_snapshot.logger as logger
-
 from PIL import Image
 
 PY2 = sys.version_info[0] == 2
@@ -16,15 +15,6 @@ if PY2:
 else:
     from io import BytesIO
 
-HELP_TEXT = """
-Usage:   snapshot input file [png|jpeg|gif|svg|pdf|eps] [delay] [pixel ratio]
-         snapshot help: display this help message
-Parameters:
-         delay: float value, unit in seconds and defaults 1.5 seconds
-         pixel ratio: integer value, defaults to 2
-         document online:github.com/pyecharts/pyecharts-snapshot
-"""
-
 DEFAULT_DELAY = 1.5
 DEFAULT_PIXEL_RATIO = 2
 PNG_FORMAT = "png"
@@ -33,9 +23,28 @@ GIF_FORMAT = "gif"
 PDF_FORMAT = "pdf"
 SVG_FORMAT = "svg"
 EPS_FORMAT = "eps"
+B64_FORMAT = "base64"
 
 SUPPORTED_IMAGE_FORMATS = [
-    PDF_FORMAT, JPG_FORMAT, GIF_FORMAT, SVG_FORMAT, EPS_FORMAT]
+    PNG_FORMAT,
+    JPG_FORMAT,
+    GIF_FORMAT,
+    PDF_FORMAT,
+    SVG_FORMAT,
+    EPS_FORMAT,
+    B64_FORMAT,
+]
+
+HELP_TEXT = """
+Usage:   snapshot input file [%s] [delay] [pixel ratio]
+         snapshot help: display this help message
+Parameters:
+         delay: float value, unit in seconds and defaults 1.5 seconds
+         pixel ratio: integer value, defaults to 2
+         document online:github.com/pyecharts/pyecharts-snapshot
+""".format(
+    "|".join(SUPPORTED_IMAGE_FORMATS)
+)
 
 PHANTOMJS_EXEC = "phantomjs"
 DEFAULT_OUTPUT_NAME = "output.%s"
@@ -110,8 +119,8 @@ def make_a_snapshot(
         content = content.decode("utf-8")
     else:
         content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
-    if file_type == SVG_FORMAT:
-        save_as_svg(content, output_name)
+    if file_type in [SVG_FORMAT, B64_FORMAT]:
+        save_as_text(content, output_name)
     else:
         # pdf, gif, png, jpeg
         content_array = content.split(",")
@@ -149,7 +158,7 @@ def save_as_png(imagedata, output_name):
         f.write(imagedata)
 
 
-def save_as_svg(imagedata, output_name):
+def save_as_text(imagedata, output_name):
     with codecs.open(output_name, "w", encoding="utf-8") as f:
         f.write(imagedata)
 
