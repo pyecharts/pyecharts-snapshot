@@ -5,6 +5,9 @@ pyecharts-snapshot
 .. image:: https://api.travis-ci.org/pyecharts/pyecharts-snapshot.svg?branch=master
    :target: http://travis-ci.org/pyecharts/pyecharts-snapshot
 
+.. image:: https://dev.azure.com/pyecharts/pyecharts-snapshot/_apis/build/status/pyecharts.pyecharts-snapshot
+   :target: https://dev.azure.com/pyecharts/pyecharts-snapshot/_build?definitionId=1&_a=summary
+
 .. image:: https://codecov.io/gh/pyecharts/pyecharts-snapshot/branch/master/graph/badge.svg
     :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
 
