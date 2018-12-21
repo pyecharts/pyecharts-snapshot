@@ -7,6 +7,7 @@ from platform import python_implementation
 
 from mock import patch
 from nose.tools import eq_, raises
+from nose import SkipTest
 from pyecharts_snapshot.main import (
     PY2,
     main,
@@ -104,7 +105,7 @@ class TestMain:
                 main()
         except Exception:
             print(self.fake_popen.call_args)
-            assert self.fake_popen.call_args[0][0][2].startswith("file:////")
+            assert self.fake_popen.call_args[0][0][2].startswith("file:///")
             assert self.fake_popen.call_args[0][0][2].endswith(
                 "tests/fixtures/render.html"
             )
@@ -172,7 +173,10 @@ def test_win32_shell_flag(fake_check, fake_popen):
 
 @patch("subprocess.Popen")
 @patch("pyecharts_snapshot.main.chk_phantomjs")
-def test_win32_shell_flag_is_false(fake_check, fake_popen):
+def test_win32_shell_flag_is_false_for_non_win32_os(fake_check, fake_popen):
+    if sys.platform == "win32":
+        raise SkipTest(
+            "No need to test it on windows platform. shell=True is required")
     fake_popen.side_effect = CustomTestException("Enough. Stop testing")
     try:
         make_a_snapshot(
@@ -231,7 +235,7 @@ def test_to_file_uri():
     eq_(uri, "file:///C:/user/tmp.html")
     linux_file = "tests/fixtures/tmp.html"
     uri2 = to_file_uri(linux_file)
-    assert uri2.startswith("file:////")
+    assert uri2.startswith("file:///")
     assert uri2.endswith(linux_file)
 
 
