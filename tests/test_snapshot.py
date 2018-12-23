@@ -107,7 +107,7 @@ class TestMain:
             print(self.fake_popen.call_args)
             assert self.fake_popen.call_args[0][0][2].startswith("file:///")
             assert self.fake_popen.call_args[0][0][2].endswith(
-                "tests/fixtures/render.html"
+                os.path.join("tests/fixtures/render.html".split('/'))
             )
 
     def test_default_delay_value(self):
@@ -233,7 +233,7 @@ def test_to_file_uri():
     windows_file = "C:\\user\\tmp.html"
     uri = to_file_uri(windows_file)
     eq_(uri, "file:///C:/user/tmp.html")
-    linux_file = "tests/fixtures/tmp.html"
+    linux_file = os.path.join("tests/fixtures/tmp.html".split('/'))
     uri2 = to_file_uri(linux_file)
     assert uri2.startswith("file:///")
     assert uri2.endswith(linux_file)
