@@ -11,6 +11,17 @@ pyecharts-snapshot
 .. image:: https://codecov.io/gh/pyecharts/pyecharts-snapshot/branch/master/graph/badge.svg
     :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
 
+
+Notice
+================================================================================
+
+This project has been split into two parts: user logics are merged into
+pyecharts 1.0.0, the other part formed
+`snapshot-phantomjs <https://github.com/pyecharts/snapshot-phantomjs>`_ .
+If you love to use 'snapshot' command line, please continue to use this
+project. For new requirements, please raise it with pyecharts main project.
+
+
 Introduction
 ================================================================================
 
