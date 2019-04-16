@@ -12,7 +12,7 @@ pyecharts-snapshot
     :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
 
 
-Notice
+News - 16.04.2019
 ================================================================================
 
 Since 0.2.0, NO LONGER, phantomjs is required!
