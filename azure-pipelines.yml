@@ -25,7 +25,6 @@ jobs:
       python -m pip install --upgrade pip setuptools wheel
       pip install -r requirements.txt
       pip install -r tests\requirements.txt
-      displayName: 'Setup dependencies'
       
   - script: |
       pip freeze
