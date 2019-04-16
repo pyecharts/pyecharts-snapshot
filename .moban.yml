@@ -12,7 +12,7 @@ configuration:
   - ".moban.d"
   configuration: pyecharts-snapshot.yml
 targets:
-  - setup.py: setup.py
+  - setup.py: snapshot_setup.py.jj2
   - requirements.txt: requirements.txt.jj2
   - .travis.yml: pyecharts_travis.yml.jj2
   - .gitignore: pyecharts_gitignore.jj2
