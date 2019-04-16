@@ -15,7 +15,7 @@ pyecharts-snapshot
 News - 16.04.2019
 ================================================================================
 
-Since 0.2.0, NO LONGER, phantomjs is required!
+Since 0.2.0, NO LONGER, phantomjs is required! NO LONGER, it supports python 2.7
 
 BUT, the capability to render pyecharts in a script has been merged into
 pyecharts 1.0.0. And the dependency on phantomjs has been sprawn as:
@@ -134,7 +134,7 @@ or clone it and install it:
 Test status
 ================================================================================
 
-Fully tested on pypy, python  2.7, 3.3, 3.4, 3.5 and 3.6.
+Fully tested on pypy, python 3.5, 3.6 and 3.7.
 
 Constraints
 ================================================================================

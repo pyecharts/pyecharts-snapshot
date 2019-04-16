@@ -2,6 +2,16 @@ name: pyecharts-snapshot
 organisation: pyecharts
 releases:
 - changes:
+  - action: Updated
+    details:
+    - 'replace phantomjs dependency with pythonic puppeteer! pyppeteer'
+  - action: Removed
+    details:    
+    - 'dropped 2.7, 3.5- support'
+    - 'remove programetic renderning of image. see snapshot-phantomjs.'
+  date: 16.04.2019
+  version: 0.2.0
+- changes:
   - action: Added
     details:
     - '`#33`: Support base64 encoding'
