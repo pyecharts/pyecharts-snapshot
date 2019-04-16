@@ -12,7 +12,7 @@ from pyecharts_snapshot.main import (
     make_a_snapshot,
 )
 
-from mock import Mock, patch
+from mock import patch
 from nose.tools import eq_, raises
 from aiounittest import async_test
 
