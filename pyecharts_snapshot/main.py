@@ -170,7 +170,7 @@ async def get_echarts(url: str, snapshot_js: str):
     return content
 
 
-def decode_base64(data: str) -> str:
+def decode_base64(data: str) -> bytes:
     """Decode base64, padding being optional.
 
     :param data: Base64 data as an ASCII byte string
