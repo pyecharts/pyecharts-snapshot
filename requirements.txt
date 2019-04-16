@@ -1,2 +1,2 @@
 pillow
-lml>=0.0.2
+pyppeteer>=0.0.25

@@ -1,9 +1,10 @@
-import io
 import os
 import sys
 import base64
 import codecs
-import subprocess
+
+import asyncio
+from pyppeteer import launch
 
 import pyecharts_snapshot.logger as logger
 from PIL import Image
@@ -50,16 +51,54 @@ DEFAULT_OUTPUT_NAME = "output.%s"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 
 MESSAGE_GENERATING = "Generating file ..."
-MESSAGE_PHANTOMJS_VERSION = "phantomjs version: %s"
 MESSAGE_FILE_SAVED_AS = "File saved in %s"
 MESSAGE_NO_SNAPSHOT = (
     "No snapshot taken by phantomjs. "
     "Please make sure it is installed and available on your PATH!"
 )
 MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
+SNAPSHOT_JS = """
+    async () => {
+        const getEcharts = () => {
+            var ele = document.querySelector('div[_echarts_instance_]');
+            var mychart = echarts.getInstanceByDom(ele);
+            return mychart.getDataURL({
+                type: '%s',
+                pixelRatio: %s,
+                 excludeComponents: ['toolbox']
+            });
+        }
+
+        const delayedFunction = () => {
+             return new Promise(function(resolve, reject){
+                  window.setTimeout(() => resolve(getEcharts()), %d);
+             });
+        }
+        return await delayedFunction();
+    }
+"""
+
+SNAPSHOT_SVG_JS = """
+  async () => {
+        const getEcharts = () => {
+           var element = document.querySelector('div[_echarts_instance_] div');
+           return element.innerHTML;
+        }
+        const delayedFunction = () => {
+             return new Promise(function(resolve, reject){
+                  window.setTimeout(() => resolve(getEcharts()), %d);
+             });
+        }
+        return await delayedFunction();
+  }
+"""
 
 
 def main():
+    asyncio.get_event_loop().run_until_complete(_main())
+
+
+async def _main():
     if len(sys.argv) < 2 or len(sys.argv) > 5:
         show_help()
     file_name = sys.argv[1]
@@ -78,7 +117,8 @@ def main():
             delay = float(sys.argv[3])  # in seconds
             if len(sys.argv) == 5:
                 pixel_ratio = sys.argv[4]
-    make_a_snapshot(file_name, output, delay=delay, pixel_ratio=pixel_ratio)
+    await make_a_snapshot(file_name, output,
+                          delay=delay, pixel_ratio=pixel_ratio)
 
 
 def show_help():
@@ -86,38 +126,36 @@ def show_help():
     exit(0)
 
 
-def make_a_snapshot(
+async def make_a_snapshot(
     file_name,
     output_name,
     delay=DEFAULT_DELAY,
     pixel_ratio=DEFAULT_PIXEL_RATIO,
     verbose=True,
 ):
-    chk_phantomjs()
     logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)
     file_type = output_name.split(".")[-1]
     __actual_delay_in_ms = int(delay * 1000)
-    # add shell=True and it works on Windows now.
-    proc_params = [
-        PHANTOMJS_EXEC,
-        os.path.join(get_resource_dir("phantomjs"), "snapshot.js"),
-        to_file_uri(file_name),
-        file_type,
-        str(__actual_delay_in_ms),
-        str(pixel_ratio),
-    ]
-    proc = subprocess.Popen(
-        proc_params,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        shell=get_shell_flag(),
-    )
-    if PY2:
-        content = proc.stdout.read()
-        content = content.decode("utf-8")
+
+    if file_type == "svg":
+        snapshot_js = SNAPSHOT_SVG_JS % __actual_delay_in_ms
     else:
-        content = io.TextIOWrapper(proc.stdout, encoding="utf-8").read()
+        snapshot_js = SNAPSHOT_JS % (
+            file_type,
+            pixel_ratio,
+            __actual_delay_in_ms)
+
+    if not file_name.startswith("http"):
+        html_path = "file://" + os.path.abspath(file_name)
+    else:
+        html_path = file_name
+
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto(html_path)
+
+    content = await page.evaluate(snapshot_js)
     if file_type in [SVG_FORMAT, B64_FORMAT]:
         save_as_text(content, output_name)
     else:
@@ -169,28 +207,6 @@ def save_as(imagedata, output_name, file_type):
     b = Image.new("RGB", m.size, color)
     b.paste(m, mask=m.split()[3])
     b.save(output_name, file_type, quality=100)
-
-
-def get_resource_dir(folder):
-    current_path = os.path.dirname(__file__)
-    resource_path = os.path.join(current_path, folder)
-    return resource_path
-
-
-def chk_phantomjs():
-    try:
-        phantomjs_version = subprocess.check_output(
-            [PHANTOMJS_EXEC, "--version"], shell=get_shell_flag()
-        )
-        phantomjs_version = phantomjs_version.decode("utf-8")
-        logger.info(MESSAGE_PHANTOMJS_VERSION % phantomjs_version)
-    except Exception:
-        logger.warn(MESSAGE_NO_PHANTOMJS)
-        sys.exit(1)
-
-
-def get_shell_flag():
-    return sys.platform == "win32"
 
 
 def to_file_uri(a_file_name):
