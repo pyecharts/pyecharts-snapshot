@@ -2,12 +2,9 @@ import os
 import sys
 import codecs
 import filecmp
-from io import BytesIO
 from asyncio import coroutine
-from platform import python_implementation
 
 from pyecharts_snapshot.main import (
-    PY2,
     SNAPSHOT_JS,
     main,
     to_file_uri,
@@ -19,7 +16,6 @@ from mock import Mock, patch
 from nose.tools import eq_, raises
 from aiounittest import async_test
 
-PY27 = sys.version_info[1] == 7 and PY2 and python_implementation() != "PyPy"
 HTML_FILE = os.path.join("tests", "fixtures", "render.html")
 SVG_HTML_FILE = os.path.join("tests", "fixtures", "render_svg_cangzhou.html")
 

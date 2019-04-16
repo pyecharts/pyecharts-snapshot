@@ -3,18 +3,12 @@ import sys
 import base64
 import codecs
 import asyncio
+from io import BytesIO
 
 import pyecharts_snapshot.logger as logger
 
 from PIL import Image
 from pyppeteer import launch
-
-PY2 = sys.version_info[0] == 2
-
-if PY2:
-    from StringIO import StringIO as BytesIO
-else:
-    from io import BytesIO
 
 DEFAULT_DELAY = 1.5
 DEFAULT_PIXEL_RATIO = 2
