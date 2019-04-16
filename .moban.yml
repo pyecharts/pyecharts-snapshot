@@ -15,7 +15,8 @@ targets:
   - setup.py: setup.py
   - requirements.txt: requirements.txt.jj2
   - .travis.yml: pyecharts_travis.yml.jj2
-  - test.sh: test.sh.jj2
+  - .gitignore: pyecharts_gitignore.jj2
+  - test.sh: test.script.jj2
   - output: CHANGELOG.rst
     template: CHANGELOG.rst.jj2
   - lint.sh: lint.script.jj2

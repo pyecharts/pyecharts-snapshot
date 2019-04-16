@@ -1,4 +1,4 @@
-{% extends "setup.py.jj2" %}
+{% extends "pyecharts_setup.py.jj2" %}
 
 {%block platform_block%}
 {%endblock%}
