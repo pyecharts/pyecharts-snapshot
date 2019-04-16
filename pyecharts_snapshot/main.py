@@ -2,12 +2,12 @@ import os
 import sys
 import base64
 import codecs
-
 import asyncio
-from pyppeteer import launch
 
 import pyecharts_snapshot.logger as logger
+
 from PIL import Image
+from pyppeteer import launch
 
 PY2 = sys.version_info[0] == 2
 
@@ -58,39 +58,39 @@ MESSAGE_NO_SNAPSHOT = (
 )
 MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 SNAPSHOT_JS = """
-    async () => {
-        const getEcharts = () => {
-            var ele = document.querySelector('div[_echarts_instance_]');
-            var mychart = echarts.getInstanceByDom(ele);
-            return mychart.getDataURL({
-                type: '%s',
-                pixelRatio: %s,
-                 excludeComponents: ['toolbox']
-            });
-        }
-
-        const delayedFunction = () => {
-             return new Promise(function(resolve, reject){
-                  window.setTimeout(() => resolve(getEcharts()), %d);
-             });
-        }
-        return await delayedFunction();
+async () => {
+    const getEcharts = () => {
+        var ele = document.querySelector('div[_echarts_instance_]');
+        var mychart = echarts.getInstanceByDom(ele);
+        return mychart.getDataURL({
+            type: '%s',
+            pixelRatio: %s,
+            excludeComponents: ['toolbox']
+        });
     }
+
+    const delayedFunction = () => {
+        return new Promise(function(resolve, reject){
+            window.setTimeout(() => resolve(getEcharts()), %d);
+        });
+    }
+    return await delayedFunction();
+}
 """
 
 SNAPSHOT_SVG_JS = """
-  async () => {
-        const getEcharts = () => {
-           var element = document.querySelector('div[_echarts_instance_] div');
-           return element.innerHTML;
-        }
-        const delayedFunction = () => {
-             return new Promise(function(resolve, reject){
-                  window.setTimeout(() => resolve(getEcharts()), %d);
-             });
-        }
-        return await delayedFunction();
-  }
+async () => {
+    const getEcharts = () => {
+        var element = document.querySelector('div[_echarts_instance_] div');
+        return element.innerHTML;
+    }
+    const delayedFunction = () => {
+        return new Promise(function(resolve, reject){
+            window.setTimeout(() => resolve(getEcharts()), %d);
+        });
+    }
+    return await delayedFunction();
+}
 """
 
 
@@ -117,8 +117,9 @@ async def _main():
             delay = float(sys.argv[3])  # in seconds
             if len(sys.argv) == 5:
                 pixel_ratio = sys.argv[4]
-    await make_a_snapshot(file_name, output,
-                          delay=delay, pixel_ratio=pixel_ratio)
+    await make_a_snapshot(
+        file_name, output, delay=delay, pixel_ratio=pixel_ratio
+    )
 
 
 def show_help():
@@ -144,23 +145,17 @@ async def make_a_snapshot(
         snapshot_js = SNAPSHOT_JS % (
             file_type,
             pixel_ratio,
-            __actual_delay_in_ms)
+            __actual_delay_in_ms,
+        )
 
-    if not file_name.startswith("http"):
-        html_path = "file://" + os.path.abspath(file_name)
-    else:
-        html_path = file_name
+    content = await get_echarts(to_file_uri(file_name), snapshot_js)
 
-    browser = await launch()
-    page = await browser.newPage()
-    await page.goto(html_path)
-
-    content = await page.evaluate(snapshot_js)
     if file_type in [SVG_FORMAT, B64_FORMAT]:
         save_as_text(content, output_name)
     else:
         # pdf, gif, png, jpeg
         content_array = content.split(",")
+
         if len(content_array) != 2:
             raise OSError(content_array)
         base64_imagedata = content_array[1]
@@ -170,11 +165,21 @@ async def make_a_snapshot(
         elif file_type in [PNG_FORMAT, JPG_FORMAT]:
             save_as_png(imagedata, output_name)
         else:
-            raise TypeError(NOT_SUPPORTED_FILE_TYPE.format(file_type))
+            pass
     if "/" not in output_name:
         output_name = os.path.join(os.getcwd(), output_name)
 
     logger.info(MESSAGE_FILE_SAVED_AS % output_name)
+
+
+async def get_echarts(url, snapshot_js):
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto(url)
+
+    content = await page.evaluate(snapshot_js)
+    await browser.close()
+    return content
 
 
 def decode_base64(data):
