@@ -1,15 +1,11 @@
+overrides: "pyecharts.yml"
 name: "pyecharts-snapshot"
-organisation: "pyecharts"
-author: "C.W."
-contact: "wangc_2011@hotmail.com"
-company: "Onni Software Ltd."
 version: "0.2.0"
 current_version: "0.2.0"
 release: "0.1.10"
 copyright_year: 2017-2019
 command_line_interface: "snapshot"
 entry_point: "pyecharts_snapshot.main:main"
-nodocs: true
 license: MIT
 dependencies:
   - pillow

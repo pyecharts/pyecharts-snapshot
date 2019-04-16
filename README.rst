@@ -134,7 +134,7 @@ or clone it and install it:
 Test status
 ================================================================================
 
-Fully tested on pypy, python 3.5, 3.6 and 3.7.
+Fully tested on pypy, python 3.5, 3.6, 3.7 and 3.8-dev.
 
 Constraints
 ================================================================================
