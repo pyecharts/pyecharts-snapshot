@@ -40,17 +40,11 @@ Parameters:
 """.format(
     "|".join(SUPPORTED_IMAGE_FORMATS)
 )
-PHANTOMJS_EXEC = "phantomjs"
 DEFAULT_OUTPUT_NAME = "output.%s"
 NOT_SUPPORTED_FILE_TYPE = "Not supported file type '%s'"
 
 MESSAGE_GENERATING = "Generating file ..."
 MESSAGE_FILE_SAVED_AS = "File saved in %s"
-MESSAGE_NO_SNAPSHOT = (
-    "No snapshot taken by phantomjs. "
-    "Please make sure it is installed and available on your PATH!"
-)
-MESSAGE_NO_PHANTOMJS = "No phantomjs found in your PATH. Please install it!"
 SNAPSHOT_JS = """
 async () => {
     const getEcharts = () => {
@@ -122,11 +116,11 @@ def show_help():
 
 
 async def make_a_snapshot(
-    file_name,
-    output_name,
-    delay=DEFAULT_DELAY,
-    pixel_ratio=DEFAULT_PIXEL_RATIO,
-    verbose=True,
+    file_name: str,
+    output_name: str,
+    delay: float = DEFAULT_DELAY,
+    pixel_ratio: int = DEFAULT_PIXEL_RATIO,
+    verbose: bool = True,
 ):
     logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)
@@ -166,7 +160,7 @@ async def make_a_snapshot(
     logger.info(MESSAGE_FILE_SAVED_AS % output_name)
 
 
-async def get_echarts(url, snapshot_js):
+async def get_echarts(url: str, snapshot_js: str):
     browser = await launch()
     page = await browser.newPage()
     await page.goto(url)
@@ -176,7 +170,7 @@ async def get_echarts(url, snapshot_js):
     return content
 
 
-def decode_base64(data):
+def decode_base64(data: str) -> str:
     """Decode base64, padding being optional.
 
     :param data: Base64 data as an ASCII byte string
@@ -189,17 +183,17 @@ def decode_base64(data):
     return base64.decodestring(data.encode("utf-8"))
 
 
-def save_as_png(imagedata, output_name):
+def save_as_png(imagedata: bytes, output_name: str):
     with open(output_name, "wb") as f:
         f.write(imagedata)
 
 
-def save_as_text(imagedata, output_name):
+def save_as_text(imagedata: str, output_name: str):
     with codecs.open(output_name, "w", encoding="utf-8") as f:
         f.write(imagedata)
 
 
-def save_as(imagedata, output_name, file_type):
+def save_as(imagedata: bytes, output_name: str, file_type: str):
     m = Image.open(BytesIO(imagedata))
     m.load()
     color = (255, 255, 255)
@@ -208,7 +202,7 @@ def save_as(imagedata, output_name, file_type):
     b.save(output_name, file_type, quality=100)
 
 
-def to_file_uri(a_file_name):
+def to_file_uri(a_file_name: str) -> str:
     __universal_file_name = a_file_name.replace("\\", "/")
     if ":" not in a_file_name:
         __universal_file_name = os.path.abspath(__universal_file_name)

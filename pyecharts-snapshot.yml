@@ -31,7 +31,7 @@ releases:
     - 'python 2, 3.5- support'
     - 'no more phantomjs dependency'
     - 'programmatic rendering capability is removed. NO longer it is integrated with pyecharts'
-  date: 16.12.2018
+  date: 17.04.2019
   version: 0.2.0
 - changes:
   - action: Added
