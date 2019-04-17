@@ -125,18 +125,10 @@ async def make_a_snapshot(
     logger.VERBOSE = verbose
     logger.info(MESSAGE_GENERATING)
     file_type = output_name.split(".")[-1]
-    __actual_delay_in_ms = int(delay * 1000)
 
-    if file_type == "svg":
-        snapshot_js = SNAPSHOT_SVG_JS % __actual_delay_in_ms
-    else:
-        snapshot_js = SNAPSHOT_JS % (
-            file_type,
-            pixel_ratio,
-            __actual_delay_in_ms,
-        )
-
-    content = await get_echarts(to_file_uri(file_name), snapshot_js)
+    content = await async_make_snapshot(
+        file_name, file_type, pixel_ratio, delay
+    )
 
     if file_type in [SVG_FORMAT, B64_FORMAT]:
         save_as_text(content, output_name)
@@ -158,6 +150,23 @@ async def make_a_snapshot(
         output_name = os.path.join(os.getcwd(), output_name)
 
     logger.info(MESSAGE_FILE_SAVED_AS % output_name)
+
+
+async def async_make_snapshot(
+    html_path: str, file_type: str, pixel_ratio: int = 2, delay: int = 2
+):
+    __actual_delay_in_ms = int(delay * 1000)
+
+    if file_type == "svg":
+        snapshot_js = SNAPSHOT_SVG_JS % __actual_delay_in_ms
+    else:
+        snapshot_js = SNAPSHOT_JS % (
+            file_type,
+            pixel_ratio,
+            __actual_delay_in_ms,
+        )
+
+    return await get_echarts(to_file_uri(html_path), snapshot_js)
 
 
 async def get_echarts(url: str, snapshot_js: str):
