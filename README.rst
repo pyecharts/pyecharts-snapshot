@@ -5,17 +5,31 @@ pyecharts-snapshot
 .. image:: https://api.travis-ci.org/pyecharts/pyecharts-snapshot.svg?branch=master
    :target: http://travis-ci.org/pyecharts/pyecharts-snapshot
 
+.. image:: https://dev.azure.com/pyecharts/pyecharts-snapshot/_apis/build/status/pyecharts.pyecharts-snapshot
+   :target: https://dev.azure.com/pyecharts/pyecharts-snapshot/_build?definitionId=1&_a=summary
+
 .. image:: https://codecov.io/gh/pyecharts/pyecharts-snapshot/branch/master/graph/badge.svg
     :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
+
+
+News - 16.04.2019
+================================================================================
+
+Since 0.2.0, NO LONGER, phantomjs is required! NO LONGER, it supports python 2.7
+
+BUT, the capability to render pyecharts in a script has been merged into
+pyecharts 1.0.0. And the dependency on phantomjs has been sprawn as:
+`snapshot-phantomjs <https://github.com/pyecharts/snapshot-phantomjs>`_ .
+
+If you love to use 'snapshot' command line, please continue to use this
+project. 
 
 Introduction
 ================================================================================
 
-pyecharts-snapshot renders the output of pyecharts as a png, jpeg, gif, eps, svg
-image, raw base64 encoding or a pdf file at command line or in your code.
+pyecharts-snapshot renders the output of pyecharts/echarts.js as a png, jpeg,
+gif, eps, svg image, raw base64 encoding or a pdf file at command line.
 
-
-Please be aware of its dependency on **phantom.js**.
 
 Usage
 ================================================================================
@@ -81,67 +95,6 @@ Programmatical usage is simple:
 
 where delay as an optional parameter can be given to specify `delay_in_seconds`.
 
-Example programs
---------------------------------------------------------------------------------
-
-Here's a fully working example code to get a png image:
-
-.. code-block:: python
-
-   # coding=utf-8
-   from __future__ import unicode_literals
-   from pyecharts import Bar
-
-   attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-   v1 = [5, 20, 36, 10, 75, 90]
-   v2 = [10, 25, 8, 60, 20, 80]
-   bar = Bar("柱状图数据堆叠示例")
-   bar.add("商家A", attr, v1, is_stack=True)
-   bar.add("商家B", attr, v2, is_stack=True)
-   bar.render(path='snapshot.png', pixel_ratio=3)
-
-
-Here is the snapshot:
-
-.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/snapshot.png
-   :width: 800px
-
-In order to get a pdf file, you can do the following instead:
-
-.. code-block:: python
-
-   # coding=utf-8
-   from __future__ import unicode_literals
-
-   from pyecharts import Line, Pie, Grid, configure
-
-   configure(output_image=True)
-
-   line = Line("折线图示例", width=1200)
-   attr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-   line.add("最高气温", attr, [11, 11, 15, 13, 12, 13, 10],
-            mark_point=["max", "min"], mark_line=["average"])
-   line.add("最低气温", attr, [1, -2, 2, 5, 3, 2, 0], mark_point=["max", "min"],
-            mark_line=["average"], legend_pos="20%")
-   attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-   v1 = [11, 12, 13, 10, 10, 10]
-   pie = Pie("饼图示例", title_pos="45%")
-   pie.add("", attr, v1, radius=[30, 55],
-           legend_pos="65%", legend_orient='vertical')
-
-   grid = Grid()
-   grid.add(line, grid_right="65%")
-   grid.add(pie, grid_left="60%")
-   grid.render(path='grid.pdf', delay=3)
-
-
-Here is the snapshot in pdf:
-
-.. image:: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/images/snapshot_in_pdf.png
-   :target: https://raw.githubusercontent.com/pyecharts/pyecharts-snapshot/master/examples/snapshot_in_pdf.pdf
-   :width: 800px
-
-
 Coffee
 ================================================================================
 
@@ -151,34 +104,6 @@ Please buy `me a coffee <http://pyecharts.org/#/zh-cn/donate>`_ if you think thi
 Installation
 ================================================================================
 
-Tools dependencies
---------------------------------------------------------------------------------
-
-Please install `a node.js binary <https://nodejs.org/en/download/>`_ to your
-operating system. Simply download the tar ball, extract it and place its bin
-folder in your PATH.
-
-Next, you will need to issue a magic command:
-
-.. code-block:: bash
-
-   $ npm install -g phantomjs-prebuilt
-
-At the end, please verify if it is there:
-
-.. code-block:: bash
-
-   $ which phantomjs
-
-On windows, please try:
-
-.. code-block::
-
-   C: > phantomjs
-
-If you see it there, continue. Otherwise, start from the beginning, ask for help
-or thank you for your attention.
-
 Package installation
 --------------------------------------------------------------------------------
 
@@ -187,6 +112,7 @@ You can install it via pip:
 .. code-block:: bash
 
     $ pip install pyecharts-snapshot
+    $ pyppeteer-install
 
 
 or clone it and install it:
@@ -196,11 +122,19 @@ or clone it and install it:
     $ git clone http://github.com/pyecharts/pyecharts-snapshot.git
     $ cd pyecharts-snapshot
     $ python setup.py install
+    $ pyppeteer-install
+
+.. note::
+
+   pyppeteer-install is recommended but optional. Your first ever run of
+   **snapshot** command will invoke pyppeteer-install. This command will
+   download `Chrominium <https://www.chromium.org>`_,
+   `about 100MB <https://github.com/miyakogi/pyppeteer#usage>`_
 
 Test status
 ================================================================================
 
-Fully tested on pypy, python  2.7, 3.3, 3.4, 3.5 and 3.6.
+Fully tested on pypy, python 3.5, 3.6, 3.7 and 3.8-dev.
 
 Constraints
 ================================================================================
@@ -211,7 +145,6 @@ Design Considerations
 ================================================================================
 
 #. Ghost.Py: very hard to install on my own. Dropped
-#. Puppeteer: too big to download. Dropped
 
 
 Maintenance Instructions
