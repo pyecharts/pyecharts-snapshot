@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 
+"""
+Template by pypi-mobans
+"""
+
 import os
 import sys
-
-# Template by pypi-mobans
 import codecs
 import locale
 import platform
 from shutil import rmtree
 
 from setuptools import Command, setup, find_packages
+
 
 # Work around mbcs bug in distutils.
 # http://bugs.python.org/issue10945
@@ -29,11 +32,17 @@ AUTHOR = "pyecharts dev team"
 VERSION = "0.2.0"
 EMAIL = "info@pyecharts.com"
 LICENSE = "MIT"
-ENTRY_POINTS = {"console_scripts": ["snapshot = pyecharts_snapshot.main:main"]}
-DESCRIPTION = "renders pyecharts output as image"
+ENTRY_POINTS = {
+    "console_scripts": [
+        "snapshot = pyecharts_snapshot.main:main"
+    ],
+}
+DESCRIPTION = (
+    "renders pyecharts output as image"
+)
 URL = "https://github.com/pyecharts/pyecharts-snapshot"
 DOWNLOAD_URL = "%s/archive/0.2.0.tar.gz" % URL
-FILES = ["README.rst", "CONTRIBUTORS.rst", "CHANGELOG.rst"]
+FILES = ["README.rst", 'CONTRIBUTORS.rst', "CHANGELOG.rst"]
 KEYWORDS = [
     "python",
     "echarts",
@@ -44,40 +53,43 @@ KEYWORDS = [
     "jpeg",
     "svg",
     "pdf",
+    "pyecharts",
+    "chart",
 ]
 
 CLASSIFIERS = [
     "Topic :: Software Development :: Libraries",
     "Programming Language :: Python",
     "Intended Audience :: Developers",
+
     "Programming Language :: Python :: 3 :: Only",
+
+
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+
 ]
 
-INSTALL_REQUIRES = ["pillow", "pyppeteer>=0.0.25"]
+
+INSTALL_REQUIRES = [
+    "pillow",
+    "pyppeteer>=0.0.25",
+]
 SETUP_COMMANDS = {}
 
-
-PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests"])
-EXTRAS_REQUIRE = {}
+PACKAGES = find_packages(exclude=["ez_setup", "examples", "tests", "tests.*"])
+EXTRAS_REQUIRE = {
+}
 # You do not need to read beyond this line
-PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(
-    sys.executable
-)
-GS_COMMAND = (
-    "gs pyecharts-snapshot v0.2.0 "
-    + "Find 0.2.0 in changelog for more details"
-)
-NO_GS_MESSAGE = (
-    "Automatic github release is disabled. "
-    + "Please install gease to enable it."
-)
+PUBLISH_COMMAND = "{0} setup.py sdist bdist_wheel upload -r pypi".format(sys.executable)
+GS_COMMAND = ("gs pyecharts-snapshot v0.2.0 " +
+              "Find 0.2.0 in changelog for more details")
+NO_GS_MESSAGE = ("Automatic github release is disabled. " +
+                 "Please install gease to enable it.")
 UPLOAD_FAILED_MSG = (
-    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND
-)
+    'Upload failed. please run "%s" yourself.' % PUBLISH_COMMAND)
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -115,12 +127,14 @@ class PublishCommand(Command):
             self.status(NO_GS_MESSAGE)
         if run_status:
             if os.system(PUBLISH_COMMAND) != 0:
-                self.status(UPLOAD_FAILED_MSG % PUBLISH_COMMAND)
+                self.status(UPLOAD_FAILED_MSG)
 
         sys.exit()
 
 
-SETUP_COMMANDS.update({"publish": PublishCommand})
+SETUP_COMMANDS.update({
+    "publish": PublishCommand
+})
 
 
 def has_gease():
@@ -131,7 +145,6 @@ def has_gease():
     """
     try:
         import gease  # noqa
-
         return True
     except ImportError:
         return False
@@ -200,5 +213,5 @@ if __name__ == "__main__":
         zip_safe=False,
         entry_points=ENTRY_POINTS,
         classifiers=CLASSIFIERS,
-        cmdclass=SETUP_COMMANDS,
+        cmdclass=SETUP_COMMANDS
     )

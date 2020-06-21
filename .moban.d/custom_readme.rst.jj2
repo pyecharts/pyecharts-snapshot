@@ -1,24 +1,6 @@
-================================================================================
-pyecharts-snapshot
-================================================================================
+{% extends "README.rst.jj2" %}
 
-.. image:: https://api.travis-ci.org/pyecharts/pyecharts-snapshot.svg
-   :target: http://travis-ci.org/pyecharts/pyecharts-snapshot
-
-.. image:: https://codecov.io/github/pyecharts/pyecharts-snapshot/coverage.png
-   :target: https://codecov.io/github/pyecharts/pyecharts-snapshot
-.. image:: https://badge.fury.io/py/pyecharts-snapshot.svg
-   :target: https://pypi.org/project/pyecharts-snapshot
-
-.. image:: https://pepy.tech/badge/pyecharts-snapshot/month
-   :target: https://pepy.tech/project/pyecharts-snapshot/month
-
-.. image:: https://img.shields.io/github/stars/pyecharts/pyecharts-snapshot.svg?style=social&maxAge=3600&label=Star
-    :target: https://github.com/pyecharts/pyecharts-snapshot/stargazers
-
-.. image:: https://readthedocs.org/projects/pyecharts-snapshot/badge/?version=latest
-   :target: http://pyecharts-snapshot.readthedocs.org/en/latest/
-
+{% block features %}
 News - 16.04.2019
 ================================================================================
 
@@ -107,26 +89,10 @@ Coffee
 
 Please buy `me a coffee <http://pyecharts.org/#/zh-cn/donate>`_ if you think this library helped.
 
-
-Installation
-================================================================================
+{% endblock %}
 
 
-You can install pyecharts-snapshot via pip:
-
-.. code-block:: bash
-
-    $ pip install pyecharts-snapshot
-
-
-or clone it and install it:
-
-.. code-block:: bash
-
-    $ git clone https://github.com/pyecharts/pyecharts-snapshot.git
-    $ cd pyecharts-snapshot
-    $ python setup.py install
-
+{% block bottom_block %}
 
 And you need to do:
 
@@ -163,3 +129,4 @@ Maintenance Instructions
 #. install pyecharts-snapshot
 #. make demo
 #. take screenshots of grid.pdf and snapshot.pdf in examples folder
+{% endblock %}
