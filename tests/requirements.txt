@@ -1,10 +1,12 @@
 nose
-mock
+mock;python_version<"3"
 codecov
 coverage
 flake8
-pyecharts
-aiounittest
+black
+isort
+collective.checkdocs
+pygments
 moban
-black;python_version>="3.6"
-isort;python_version>="3.6"
+aiounittest
+pyecharts

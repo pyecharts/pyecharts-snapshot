@@ -12,6 +12,9 @@ lint_command: make lint
 dependencies:
   - pillow
   - pyppeteer>=0.0.25
+test_dependencies:
+  - aiounittest
+  - pyecharts
 keywords:
   - echarts
   - visualisation

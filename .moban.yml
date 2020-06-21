@@ -16,3 +16,4 @@ targets:
     template: CHANGELOG.rst.jj2
   - lint.sh: lint.script.jj2
   - Makefile: Makefile.jj2
+  - tests/requirements.txt: tests/requirements.txt.jj2

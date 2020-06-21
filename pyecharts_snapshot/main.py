@@ -6,7 +6,6 @@ import asyncio
 from io import BytesIO
 
 import pyecharts_snapshot.logger as logger
-
 from PIL import Image
 from pyppeteer import launch
 
