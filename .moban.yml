@@ -17,3 +17,4 @@ targets:
   - lint.sh: lint.script.jj2
   - Makefile: Makefile.jj2
   - tests/requirements.txt: tests/requirements.txt.jj2
+  - format.sh: format.sh.jj2
