@@ -16,8 +16,6 @@ pyecharts-snapshot
 .. image:: https://img.shields.io/github/stars/pyecharts/pyecharts-snapshot.svg?style=social&maxAge=3600&label=Star
     :target: https://github.com/pyecharts/pyecharts-snapshot/stargazers
 
-.. image:: https://readthedocs.org/projects/pyecharts-snapshot/badge/?version=latest
-   :target: http://pyecharts-snapshot.readthedocs.org/en/latest/
 
 News - 16.04.2019
 ================================================================================

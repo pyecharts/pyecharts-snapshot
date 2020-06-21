@@ -1,5 +1,8 @@
 {% extends "README.rst.jj2" %}
 
+{% block documentation_link %}
+{% endblock %}
+
 {% block features %}
 News - 16.04.2019
 ================================================================================

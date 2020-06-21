@@ -22,8 +22,7 @@ stages:
   env:
     - MINREQ=0
   stage: lint
-  install: pip install flake8
-  script: flake8
+  script: make lint
 
 .moban: &moban
   python: 3.6

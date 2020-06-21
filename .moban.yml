@@ -15,3 +15,4 @@ targets:
   - output: CHANGELOG.rst
     template: CHANGELOG.rst.jj2
   - lint.sh: lint.script.jj2
+  - Makefile: Makefile.jj2
