@@ -8,5 +8,6 @@ isort
 collective.checkdocs
 pygments
 moban
+moban_jinja2_github
 aiounittest
 pyecharts

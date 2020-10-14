@@ -248,4 +248,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# remove moban hash dictionary
+.moban.hashes
+
 .idea
