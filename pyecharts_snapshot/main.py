@@ -188,7 +188,7 @@ def decode_base64(data: str) -> bytes:
     missing_padding = len(data) % 4
     if missing_padding != 0:
         data += "=" * (4 - missing_padding)
-    return base64.decodestring(data.encode("utf-8"))
+    return base64.b64decode(data.encode("utf-8"))
 
 
 def save_as_png(imagedata: bytes, output_name: str):
